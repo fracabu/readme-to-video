@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Download, Link, Code, Check, RefreshCw } from 'lucide-react';
+import { Download, Link, Code, Check, Plus } from 'lucide-react';
 import MuxPlayer from '@mux/mux-player-react';
 
 interface ResultSectionProps {
@@ -28,15 +28,9 @@ export function ResultSection({ playbackId, onReset }: ResultSectionProps) {
     <div className="w-full max-w-3xl mx-auto space-y-6">
       <Card className="glass-card overflow-hidden">
         <CardHeader className="pb-2">
-          <div className="flex items-center justify-between">
-            <CardTitle className="text-lg flex items-center gap-2">
-              <span className="text-green-500">Video Ready</span>
-            </CardTitle>
-            <Button variant="ghost" size="sm" onClick={onReset}>
-              <RefreshCw className="w-4 h-4 mr-2" />
-              New Video
-            </Button>
-          </div>
+          <CardTitle className="text-lg flex items-center gap-2">
+            <span className="text-green-500">Video Ready</span>
+          </CardTitle>
         </CardHeader>
         <CardContent className="p-0">
           <div className="aspect-video bg-black">
@@ -91,6 +85,15 @@ export function ResultSection({ playbackId, onReset }: ResultSectionProps) {
           <span>{copied === 'embed' ? 'Copied!' : 'Copy Embed Code'}</span>
         </Button>
       </div>
+
+      <Button
+        variant="default"
+        className="w-full h-auto py-4 text-lg"
+        onClick={onReset}
+      >
+        <Plus className="w-5 h-5 mr-2" />
+        Create New Video
+      </Button>
     </div>
   );
 }
