@@ -14,7 +14,7 @@ interface ResultSectionProps {
 export function ResultSection({ playbackId, onReset }: ResultSectionProps) {
   const [copied, setCopied] = useState<string | null>(null);
 
-  const streamUrl = `https://stream.mux.com/${playbackId}.m3u8`;
+  const downloadUrl = `https://stream.mux.com/${playbackId}/high.mp4`;
   const shareUrl = `https://player.mux.com/${playbackId}`;
   const embedCode = `<iframe src="https://player.mux.com/${playbackId}" width="640" height="360" frameborder="0" allowfullscreen></iframe>`;
 
@@ -53,7 +53,7 @@ export function ResultSection({ playbackId, onReset }: ResultSectionProps) {
           className="h-auto py-4 flex-col gap-2"
           asChild
         >
-          <a href={streamUrl} download target="_blank" rel="noopener noreferrer">
+          <a href={downloadUrl} download target="_blank" rel="noopener noreferrer">
             <Download className="w-5 h-5" />
             <span>Download Video</span>
           </a>
