@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.mux.com)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:docs.kie.ai)",
+      "WebFetch(domain:kie.ai)"
+    ]
+  }
+}
