@@ -15,9 +15,7 @@ export function ResultSection({ playbackId, onReset }: ResultSectionProps) {
   const [copied, setCopied] = useState<string | null>(null);
 
   const streamUrl = `https://stream.mux.com/${playbackId}.m3u8`;
-  const shareUrl = typeof window !== 'undefined'
-    ? `${window.location.origin}?v=${playbackId}`
-    : '';
+  const shareUrl = `https://player.mux.com/${playbackId}`;
   const embedCode = `<iframe src="https://player.mux.com/${playbackId}" width="640" height="360" frameborder="0" allowfullscreen></iframe>`;
 
   const copyToClipboard = async (text: string, type: string) => {

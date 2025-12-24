@@ -7,7 +7,8 @@
 [![Next.js](https://img.shields.io/badge/Next.js-14.2-black?style=flat-square&logo=next.js)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.6-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
-[![Mux](https://img.shields.io/badge/Mux-Video%20Streaming-FF2D55?style=flat-square&logo=mux&logoColor=white)](https://mux.com/)
+[![Mux](https://img.shields.io/badge/Mux-Video%20Streaming-FF2D55?style=flat-square)](https://mux.com/)
+[![Sora 2](https://img.shields.io/badge/Sora%202-AI%20Video-8B5CF6?style=flat-square)](https://kie.ai/)
 [![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
 
 **[English](#english)** | **[Italiano](#italiano)**
@@ -16,51 +17,64 @@
 
 <img src="https://img.shields.io/badge/Powered%20by-Sora%202%20AI-8B5CF6?style=for-the-badge" alt="Powered by Sora 2"/>
 <img src="https://img.shields.io/badge/LLM-Multi--Provider-F59E0B?style=for-the-badge" alt="Multi-Provider LLM"/>
+<img src="https://img.shields.io/badge/Streaming-Mux-FF2D55?style=for-the-badge" alt="Mux Streaming"/>
 
 </div>
 
 ---
 
 <a name="english"></a>
-## English
+## 🇬🇧 English
 
 ### What is README2Video?
 
-**README2Video** transforms GitHub README files into professional promotional videos in minutes. Simply paste a GitHub URL or raw README content, and our AI pipeline will analyze it, generate a compelling script, create stunning visuals, and deliver a streamable video.
+**README2Video** is a web application that automatically transforms GitHub README files into professional promotional videos. Simply paste a GitHub repository URL or raw README content, and our AI-powered pipeline will:
+
+1. **Analyze** your README to extract key information
+2. **Generate** a compelling video script with scenes
+3. **Create** stunning AI-generated video clips using Sora 2
+4. **Host** the final video on Mux for instant streaming
 
 ```
-README.md → LLM Analysis → AI Video Generation → Mux Streaming
+README.md → LLM Analysis → AI Video Generation → Mux Streaming → Share!
 ```
 
-### Features
+### Key Features
 
 | Feature | Description |
 |---------|-------------|
-| **Multi-Provider LLM** | Choose between Anthropic, OpenAI, Google Gemini, or OpenRouter (free tier available) |
-| **AI Video Generation** | Powered by Sora 2 via Kie.ai - cinematic quality with native audio |
-| **Real-time Updates** | SSE-powered progress tracking from analysis to final video |
-| **Mux Integration** | Professional video hosting with adaptive streaming |
-| **Multiple Styles** | Tech, Minimal, or Energetic video aesthetics |
-| **GitHub Integration** | Direct README fetching from any public repository |
+| **GitHub Integration** | Paste any public GitHub URL and automatically fetch the README |
+| **Multi-Provider LLM** | Choose between Anthropic Claude, OpenAI GPT, Google Gemini, or OpenRouter (free tier available) |
+| **AI Video Generation** | Powered by Sora 2 via Kie.ai - cinematic quality videos with native audio |
+| **Real-time Progress** | Live updates via Server-Sent Events (SSE) showing each generation step |
+| **Professional Hosting** | Videos hosted on Mux with adaptive bitrate streaming |
+| **Multiple Styles** | Choose between Tech, Minimal, or Energetic video aesthetics |
+| **Multi-Scene Support** | Generate 30s (2 scenes) or 60s (4 scenes) videos |
+| **Easy Sharing** | One-click copy for share link, embed code, or direct download |
+
+### How It Works
+
+1. **Input**: Enter a GitHub URL or paste your README content directly
+2. **Configure**: Select video style (Tech/Minimal/Energetic), duration (30s/60s), and LLM provider
+3. **Generate**: Click "Generate Video" and watch the real-time progress
+4. **Share**: Download the video, copy the Mux player link, or embed it on your site
 
 ### Tech Stack
 
-<div align="center">
-
-| Frontend | Backend | AI/Video | Infrastructure |
-|----------|---------|----------|----------------|
-| React 18 | Next.js 14 API Routes | Anthropic Claude | Mux Video |
-| Tailwind CSS | Server-Sent Events | OpenAI GPT | Kie.ai Sora 2 |
-| shadcn/ui | Zod Validation | Google Gemini | — |
-| Radix UI | In-memory Sessions | OpenRouter | — |
-
-</div>
+| Category | Technologies |
+|----------|-------------|
+| **Frontend** | React 18, Tailwind CSS, shadcn/ui, Radix UI |
+| **Backend** | Next.js 14 API Routes, Server-Sent Events |
+| **AI/LLM** | Anthropic Claude, OpenAI GPT, Google Gemini, OpenRouter |
+| **Video** | Kie.ai Sora 2 (text-to-video), FFmpeg (concatenation) |
+| **Streaming** | Mux Video (adaptive streaming, player embed) |
+| **Validation** | Zod schema validation |
 
 ### Quick Start
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/readme-to-video.git
+git clone https://github.com/fracabu/readme-to-video.git
 cd readme-to-video
 
 # Install dependencies
@@ -97,26 +111,13 @@ NEXT_PUBLIC_APP_URL=http://localhost:3000
 DEFAULT_LLM_PROVIDER=openrouter
 ```
 
-### API Reference
+### API Endpoints
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
-| `/api/generate` | POST | Start video generation |
-| `/api/status/[sessionId]` | GET | SSE stream for real-time progress |
-| `/api/kie-callback` | POST | Webhook receiver for Kie.ai |
-
-#### Generate Request
-
-```json
-{
-  "source": "url",
-  "content": "https://github.com/user/repo",
-  "style": "tech",
-  "duration": 30,
-  "provider": "openrouter",
-  "model": "google/gemini-2.0-flash-exp:free"
-}
-```
+| `/api/generate` | POST | Start video generation process |
+| `/api/status/[sessionId]` | GET | SSE stream for real-time progress updates |
+| `/api/kie-callback` | POST | Webhook receiver for Kie.ai notifications |
 
 ### Available LLM Models
 
@@ -141,9 +142,8 @@ DEFAULT_LLM_PROVIDER=openrouter
 <details>
 <summary><strong>OpenAI</strong></summary>
 
-- `gpt-5.2` - GPT-5.2
-- `gpt-4.1` - GPT-4.1
-- `o4-mini` - o4-mini (Fast Reasoning)
+- `gpt-4o` - GPT-4o
+- `gpt-4o-mini` - GPT-4o Mini
 
 </details>
 
@@ -163,74 +163,60 @@ DEFAULT_LLM_PROVIDER=openrouter
 | LLM (OpenRouter Free) | $0.00 |
 | Mux Streaming | Pay-as-you-go |
 
-### Project Structure
-
-```
-readme-to-video/
-├── app/
-│   ├── api/
-│   │   ├── generate/         # Main generation endpoint
-│   │   ├── status/[sessionId]/ # SSE status stream
-│   │   └── kie-callback/     # Webhook receiver
-│   ├── layout.tsx
-│   └── page.tsx
-├── components/
-│   ├── ui/                   # shadcn/ui components
-│   ├── input-section.tsx     # README input form
-│   ├── progress-section.tsx  # Generation progress
-│   └── result-section.tsx    # Video player
-├── lib/
-│   ├── llm/                  # Multi-provider LLM factory
-│   ├── kie.ts               # Kie.ai API wrapper
-│   ├── mux.ts               # Mux API wrapper
-│   ├── github.ts            # GitHub README fetcher
-│   └── session-store.ts     # In-memory session management
-└── types/
-    └── index.ts             # TypeScript definitions
-```
-
 ---
 
 <a name="italiano"></a>
-## Italiano
+## 🇮🇹 Italiano
 
 ### Cos'è README2Video?
 
-**README2Video** trasforma i file README di GitHub in video promozionali professionali in pochi minuti. Basta incollare un URL GitHub o il contenuto del README, e la nostra pipeline AI lo analizzerà, genererà uno script coinvolgente, creerà visual accattivanti e consegnerà un video in streaming.
+**README2Video** è un'applicazione web che trasforma automaticamente i file README di GitHub in video promozionali professionali. Basta incollare l'URL di un repository GitHub o il contenuto del README, e la nostra pipeline AI:
+
+1. **Analizza** il README per estrarre le informazioni chiave
+2. **Genera** uno script video coinvolgente con scene
+3. **Crea** clip video AI mozzafiato usando Sora 2
+4. **Ospita** il video finale su Mux per lo streaming istantaneo
 
 ```
-README.md → Analisi LLM → Generazione Video AI → Streaming Mux
+README.md → Analisi LLM → Generazione Video AI → Streaming Mux → Condividi!
 ```
 
-### Funzionalità
+### Funzionalità Principali
 
 | Funzionalità | Descrizione |
 |--------------|-------------|
-| **LLM Multi-Provider** | Scegli tra Anthropic, OpenAI, Google Gemini o OpenRouter (tier gratuito disponibile) |
-| **Generazione Video AI** | Powered by Sora 2 via Kie.ai - qualità cinematografica con audio nativo |
-| **Aggiornamenti Real-time** | Tracking del progresso tramite SSE dall'analisi al video finale |
-| **Integrazione Mux** | Hosting video professionale con streaming adattivo |
-| **Stili Multipli** | Estetica video Tech, Minimal o Energetic |
-| **Integrazione GitHub** | Fetch diretto del README da qualsiasi repository pubblico |
+| **Integrazione GitHub** | Incolla qualsiasi URL GitHub pubblico e scarica automaticamente il README |
+| **LLM Multi-Provider** | Scegli tra Anthropic Claude, OpenAI GPT, Google Gemini o OpenRouter (tier gratuito disponibile) |
+| **Generazione Video AI** | Powered by Sora 2 via Kie.ai - video di qualità cinematografica con audio nativo |
+| **Progresso Real-time** | Aggiornamenti live via Server-Sent Events (SSE) per ogni step di generazione |
+| **Hosting Professionale** | Video ospitati su Mux con streaming adattivo |
+| **Stili Multipli** | Scegli tra estetica Tech, Minimal o Energetic |
+| **Supporto Multi-Scena** | Genera video da 30s (2 scene) o 60s (4 scene) |
+| **Condivisione Facile** | Un click per copiare link, codice embed o download diretto |
+
+### Come Funziona
+
+1. **Input**: Inserisci un URL GitHub o incolla il contenuto del README direttamente
+2. **Configura**: Seleziona stile video (Tech/Minimal/Energetic), durata (30s/60s) e provider LLM
+3. **Genera**: Clicca "Generate Video" e segui il progresso in tempo reale
+4. **Condividi**: Scarica il video, copia il link Mux player o incorporalo nel tuo sito
 
 ### Stack Tecnologico
 
-<div align="center">
-
-| Frontend | Backend | AI/Video | Infrastruttura |
-|----------|---------|----------|----------------|
-| React 18 | Next.js 14 API Routes | Anthropic Claude | Mux Video |
-| Tailwind CSS | Server-Sent Events | OpenAI GPT | Kie.ai Sora 2 |
-| shadcn/ui | Validazione Zod | Google Gemini | — |
-| Radix UI | Sessioni In-memory | OpenRouter | — |
-
-</div>
+| Categoria | Tecnologie |
+|-----------|------------|
+| **Frontend** | React 18, Tailwind CSS, shadcn/ui, Radix UI |
+| **Backend** | Next.js 14 API Routes, Server-Sent Events |
+| **AI/LLM** | Anthropic Claude, OpenAI GPT, Google Gemini, OpenRouter |
+| **Video** | Kie.ai Sora 2 (text-to-video), FFmpeg (concatenazione) |
+| **Streaming** | Mux Video (streaming adattivo, player embed) |
+| **Validazione** | Zod schema validation |
 
 ### Avvio Rapido
 
 ```bash
 # Clona il repository
-git clone https://github.com/yourusername/readme-to-video.git
+git clone https://github.com/fracabu/readme-to-video.git
 cd readme-to-video
 
 # Installa le dipendenze
@@ -267,26 +253,13 @@ NEXT_PUBLIC_APP_URL=http://localhost:3000
 DEFAULT_LLM_PROVIDER=openrouter
 ```
 
-### Riferimento API
+### Endpoint API
 
 | Endpoint | Metodo | Descrizione |
 |----------|--------|-------------|
-| `/api/generate` | POST | Avvia generazione video |
-| `/api/status/[sessionId]` | GET | Stream SSE per progresso real-time |
-| `/api/kie-callback` | POST | Receiver webhook per Kie.ai |
-
-#### Richiesta Generate
-
-```json
-{
-  "source": "url",
-  "content": "https://github.com/user/repo",
-  "style": "tech",
-  "duration": 30,
-  "provider": "openrouter",
-  "model": "google/gemini-2.0-flash-exp:free"
-}
-```
+| `/api/generate` | POST | Avvia il processo di generazione video |
+| `/api/status/[sessionId]` | GET | Stream SSE per aggiornamenti progresso real-time |
+| `/api/kie-callback` | POST | Receiver webhook per notifiche Kie.ai |
 
 ### Modelli LLM Disponibili
 
@@ -311,9 +284,8 @@ DEFAULT_LLM_PROVIDER=openrouter
 <details>
 <summary><strong>OpenAI</strong></summary>
 
-- `gpt-5.2` - GPT-5.2
-- `gpt-4.1` - GPT-4.1
-- `o4-mini` - o4-mini (Ragionamento Veloce)
+- `gpt-4o` - GPT-4o
+- `gpt-4o-mini` - GPT-4o Mini
 
 </details>
 
@@ -332,32 +304,6 @@ DEFAULT_LLM_PROVIDER=openrouter
 | Generazione Video (Sora 2) | $0.15 per clip 10-15s |
 | LLM (OpenRouter Free) | $0.00 |
 | Streaming Mux | Pay-as-you-go |
-
-### Struttura Progetto
-
-```
-readme-to-video/
-├── app/
-│   ├── api/
-│   │   ├── generate/         # Endpoint principale generazione
-│   │   ├── status/[sessionId]/ # Stream SSE stato
-│   │   └── kie-callback/     # Receiver webhook
-│   ├── layout.tsx
-│   └── page.tsx
-├── components/
-│   ├── ui/                   # Componenti shadcn/ui
-│   ├── input-section.tsx     # Form input README
-│   ├── progress-section.tsx  # Progresso generazione
-│   └── result-section.tsx    # Player video
-├── lib/
-│   ├── llm/                  # Factory LLM multi-provider
-│   ├── kie.ts               # Wrapper API Kie.ai
-│   ├── mux.ts               # Wrapper API Mux
-│   ├── github.ts            # Fetcher README GitHub
-│   └── session-store.ts     # Gestione sessioni in-memory
-└── types/
-    └── index.ts             # Definizioni TypeScript
-```
 
 ---
 
@@ -378,8 +324,8 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ---
 
-<sub>Built with passion using Next.js, Sora 2, and Mux</sub>
+<sub>Built with ❤️ using Next.js, Sora 2 AI, and Mux</sub>
 
-<sub>Costruito con passione usando Next.js, Sora 2 e Mux</sub>
+<sub>Costruito con ❤️ usando Next.js, Sora 2 AI e Mux</sub>
 
 </div>
