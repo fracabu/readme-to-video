@@ -61,15 +61,20 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen flex flex-col">
+    <main className="h-screen flex flex-col overflow-hidden">
       {/* Header */}
       <header className="border-b border-border/50 backdrop-blur-xl bg-background/80 sticky top-0 z-50">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-mux-gradient flex items-center justify-center">
-              <span className="text-white font-bold text-sm">R2V</span>
+            {/* Logo: circle outside, square cutout inside with R2V */}
+            <div className="w-14 h-14 rounded-full border-2 border-primary/40 flex items-center justify-center">
+              <div className="w-11 h-11 bg-gradient-to-br from-primary to-orange-500 rounded-full flex items-center justify-center">
+                <div className="w-[31px] h-[31px] bg-background flex items-center justify-center">
+                  <span className="text-primary font-bold text-xs font-mono">R2V</span>
+                </div>
+              </div>
             </div>
-            <span className="font-semibold">README2Video</span>
+            <span className="font-bold tracking-tight">README2Video</span>
           </div>
           <a
             href="https://github.com"
@@ -83,7 +88,7 @@ export default function Home() {
       </header>
 
       {/* Main Content */}
-      <div className="flex-1 container mx-auto px-4 py-12">
+      <div className="flex-1 container mx-auto px-4 py-4 flex items-center justify-center">
         {state === 'input' && (
           <InputSection onGenerate={handleGenerate} isLoading={isLoading} />
         )}
@@ -118,15 +123,15 @@ export default function Home() {
       </div>
 
       {/* Footer */}
-      <footer className="border-t border-border/50 py-6">
-        <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
+      <footer className="border-t border-border/50 py-3">
+        <div className="container mx-auto px-4 text-center text-xs text-muted-foreground">
           <p>
             Powered by{' '}
-            <span className="text-foreground">Claude AI</span>
+            <span className="text-foreground font-medium">Claude AI</span>
             {' '}&bull;{' '}
-            <span className="text-foreground">Sora 2</span>
+            <span className="text-foreground font-medium">Sora 2</span>
             {' '}&bull;{' '}
-            <span className="text-foreground">Mux</span>
+            <span className="text-foreground font-medium">Mux</span>
           </p>
         </div>
       </footer>

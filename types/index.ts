@@ -69,7 +69,7 @@ export interface GenerateRequest {
   source: 'url' | 'text';
   content: string;
   style: 'tech' | 'minimal' | 'energetic';
-  duration: 30 | 60;
+  duration: 15 | 30 | 60;
   provider?: AIProvider;
   model?: string;
 }

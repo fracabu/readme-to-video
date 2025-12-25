@@ -6,7 +6,7 @@ import { OpenRouterProvider } from './openrouter';
 
 export interface ScriptOptions {
   style: 'tech' | 'minimal' | 'energetic';
-  duration: 30 | 60;
+  duration: 15 | 30 | 60;
 }
 
 export interface LLMProvider {
@@ -80,13 +80,18 @@ export function getScriptGenerationPrompt(options: ScriptOptions): string {
     }`).join(',\n');
 
   // Define narrative arc based on number of scenes
-  const narrativeArc = numScenes === 2
-    ? `Scene 1 (HOOK + PROBLEM): Grab attention, introduce the problem the app solves, show pain points.
-Scene 2 (SOLUTION + CTA): Present the app as the solution, highlight key features, end with inspiring call-to-action.`
-    : `Scene 1 (HOOK): Grab attention with a striking opening, introduce the core concept.
+  let narrativeArc: string;
+  if (numScenes === 1) {
+    narrativeArc = `Scene 1 (COMPLETE): Create a compelling 15-second overview that hooks attention, briefly introduces the problem, presents the app as the solution, and ends with a strong call-to-action. Pack maximum impact into this single scene.`;
+  } else if (numScenes === 2) {
+    narrativeArc = `Scene 1 (HOOK + PROBLEM): Grab attention, introduce the problem the app solves, show pain points.
+Scene 2 (SOLUTION + CTA): Present the app as the solution, highlight key features, end with inspiring call-to-action.`;
+  } else {
+    narrativeArc = `Scene 1 (HOOK): Grab attention with a striking opening, introduce the core concept.
 Scene 2 (PROBLEM): Present the problem/challenge that users face, build tension.
 Scene 3 (SOLUTION): Introduce the app as the solution, show how it works visually.
 Scene 4 (FEATURES + CTA): Highlight 2-3 key features, end with inspiring call-to-action and emotional payoff.`;
+  }
 
   return `Create a promotional and explanatory video script based on the project analysis provided.
 

@@ -20,7 +20,7 @@ const requestSchema = z.object({
   source: z.enum(['url', 'text']),
   content: z.string().min(1),
   style: z.enum(['tech', 'minimal', 'energetic']),
-  duration: z.union([z.literal(30), z.literal(60)]),
+  duration: z.union([z.literal(15), z.literal(30), z.literal(60)]),
   provider: z.enum(['anthropic', 'openai', 'openrouter', 'gemini']).optional(),
   model: z.string().optional(),
 });
