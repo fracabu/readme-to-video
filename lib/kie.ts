@@ -1,10 +1,20 @@
+import type { VideoQuality } from '@/types';
+
 const KIE_API_BASE = 'https://api.kie.ai/api/v1/jobs';
+
+// Model mapping for different quality levels
+const QUALITY_MODELS: Record<VideoQuality, { model: string; size?: string }> = {
+  'base': { model: 'sora-2-text-to-video' },
+  'pro': { model: 'sora-2-pro-text-to-video', size: 'standard' },
+  'pro-hd': { model: 'sora-2-pro-text-to-video', size: 'high' },
+};
 
 /**
  * Create a video generation task with Kie.ai Sora 2
  */
 export async function createVideoTask(
   prompt: string,
+  quality: VideoQuality = 'base',
   callbackUrl?: string
 ): Promise<string> {
   const apiKey = process.env.KIE_API_KEY;
@@ -12,13 +22,16 @@ export async function createVideoTask(
     throw new Error('KIE_API_KEY is not configured');
   }
 
+  const qualityConfig = QUALITY_MODELS[quality];
+
   const payload: Record<string, unknown> = {
-    model: 'sora-2-text-to-video',
+    model: qualityConfig.model,
     input: {
       prompt,
       aspect_ratio: 'landscape',
       n_frames: '15',
       remove_watermark: true,
+      ...(qualityConfig.size && { size: qualityConfig.size }),
     },
   };
 

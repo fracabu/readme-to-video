@@ -65,14 +65,23 @@ export interface Session {
 }
 
 // API Request/Response Types
+export type VideoQuality = 'base' | 'pro' | 'pro-hd';
+
 export interface GenerateRequest {
   source: 'url' | 'text';
   content: string;
   style: 'tech' | 'minimal' | 'energetic';
   duration: 15 | 30 | 60;
+  quality: VideoQuality;
   provider?: AIProvider;
   model?: string;
 }
+
+export const VIDEO_QUALITY_INFO: Record<VideoQuality, { name: string; description: string; price: string }> = {
+  'base': { name: 'Standard', description: '720p - Best value', price: '$0.15/scene' },
+  'pro': { name: 'Pro', description: '720p enhanced', price: '$1.35/scene' },
+  'pro-hd': { name: 'Pro HD', description: '1080p quality', price: '$3.15/scene' },
+};
 
 export interface GenerateResponse {
   sessionId: string;

@@ -49,15 +49,17 @@ README.md → LLM Analysis → AI Video Generation → Mux Streaming → Share!
 | **Real-time Progress** | Live updates via Server-Sent Events (SSE) showing each generation step |
 | **Professional Hosting** | Videos hosted on Mux with adaptive bitrate streaming |
 | **Multiple Styles** | Choose between Tech, Minimal, or Energetic video aesthetics |
-| **Multi-Scene Support** | Generate 30s (2 scenes) or 60s (4 scenes) videos |
-| **Easy Sharing** | One-click copy for share link, embed code, or direct download |
+| **Multi-Scene Support** | Generate 15s (1 scene), 30s (2 scenes), or 60s (4 scenes) videos |
+| **Video Quality Options** | Standard (720p), Pro (720p enhanced), or Pro HD (1080p) via Sora 2 |
+| **Smooth Transitions** | Professional crossfade transitions between scenes using FFmpeg |
+| **Easy Sharing** | One-click copy for Mux player share link or embed code |
 
 ### How It Works
 
 1. **Input**: Enter a GitHub URL or paste your README content directly
-2. **Configure**: Select video style (Tech/Minimal/Energetic), duration (30s/60s), and LLM provider
-3. **Generate**: Click "Generate Video" and watch the real-time progress
-4. **Share**: Download the video, copy the Mux player link, or embed it on your site
+2. **Configure**: Select video style, duration (15s/30s/60s), quality (Standard/Pro/Pro HD), and LLM provider
+3. **Generate**: Click "Generate Video" and watch the real-time progress with two-column layout
+4. **Share**: Copy the Mux player link or embed code to share your video
 
 ### Tech Stack
 
@@ -159,7 +161,9 @@ DEFAULT_LLM_PROVIDER=openrouter
 
 | Service | Cost |
 |---------|------|
-| Video Generation (Sora 2) | $0.15 per 10-15s clip |
+| Video Generation - Standard (Sora 2) | $0.15 per scene |
+| Video Generation - Pro (Sora 2 Pro) | $1.35 per scene |
+| Video Generation - Pro HD (Sora 2 Pro 1080p) | $3.15 per scene |
 | LLM (OpenRouter Free) | $0.00 |
 | Mux Streaming | Pay-as-you-go |
 
@@ -191,15 +195,17 @@ README.md → Analisi LLM → Generazione Video AI → Streaming Mux → Condivi
 | **Progresso Real-time** | Aggiornamenti live via Server-Sent Events (SSE) per ogni step di generazione |
 | **Hosting Professionale** | Video ospitati su Mux con streaming adattivo |
 | **Stili Multipli** | Scegli tra estetica Tech, Minimal o Energetic |
-| **Supporto Multi-Scena** | Genera video da 30s (2 scene) o 60s (4 scene) |
-| **Condivisione Facile** | Un click per copiare link, codice embed o download diretto |
+| **Supporto Multi-Scena** | Genera video da 15s (1 scena), 30s (2 scene) o 60s (4 scene) |
+| **Opzioni Qualità Video** | Standard (720p), Pro (720p migliorato), o Pro HD (1080p) via Sora 2 |
+| **Transizioni Fluide** | Crossfade professionali tra le scene con FFmpeg |
+| **Condivisione Facile** | Un click per copiare link Mux player o codice embed |
 
 ### Come Funziona
 
 1. **Input**: Inserisci un URL GitHub o incolla il contenuto del README direttamente
-2. **Configura**: Seleziona stile video (Tech/Minimal/Energetic), durata (30s/60s) e provider LLM
-3. **Genera**: Clicca "Generate Video" e segui il progresso in tempo reale
-4. **Condividi**: Scarica il video, copia il link Mux player o incorporalo nel tuo sito
+2. **Configura**: Seleziona stile video, durata (15s/30s/60s), qualità (Standard/Pro/Pro HD) e provider LLM
+3. **Genera**: Clicca "Generate Video" e segui il progresso in tempo reale con layout a due colonne
+4. **Condividi**: Copia il link Mux player o il codice embed per condividere il tuo video
 
 ### Stack Tecnologico
 
@@ -301,7 +307,9 @@ DEFAULT_LLM_PROVIDER=openrouter
 
 | Servizio | Costo |
 |----------|-------|
-| Generazione Video (Sora 2) | $0.15 per clip 10-15s |
+| Generazione Video - Standard (Sora 2) | $0.15 per scena |
+| Generazione Video - Pro (Sora 2 Pro) | $1.35 per scena |
+| Generazione Video - Pro HD (Sora 2 Pro 1080p) | $3.15 per scena |
 | LLM (OpenRouter Free) | $0.00 |
 | Streaming Mux | Pay-as-you-go |
 

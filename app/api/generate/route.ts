@@ -14,13 +14,14 @@ import {
   updateSceneStatus,
   setSessionResult,
 } from '@/lib/session-store';
-import type { AIProvider } from '@/types';
+import type { AIProvider, VideoQuality } from '@/types';
 
 const requestSchema = z.object({
   source: z.enum(['url', 'text']),
   content: z.string().min(1),
   style: z.enum(['tech', 'minimal', 'energetic']),
   duration: z.union([z.literal(15), z.literal(30), z.literal(60)]),
+  quality: z.enum(['base', 'pro', 'pro-hd']).optional(),
   provider: z.enum(['anthropic', 'openai', 'openrouter', 'gemini']).optional(),
   model: z.string().optional(),
 });
@@ -53,6 +54,7 @@ export async function POST(request: Request) {
       readme,
       data.style,
       data.duration,
+      data.quality || 'base',
       data.provider || (process.env.DEFAULT_LLM_PROVIDER as AIProvider) || 'openrouter',
       data.model
     ).catch((error) => {
@@ -83,7 +85,8 @@ async function processVideo(
   sessionId: string,
   readme: string,
   style: 'tech' | 'minimal' | 'energetic',
-  duration: 30 | 60,
+  duration: 15 | 30 | 60,
+  quality: VideoQuality,
   provider: AIProvider,
   model?: string
 ) {
@@ -109,8 +112,8 @@ async function processVideo(
   // Create all tasks first
   const tasks: { sceneNumber: number; taskId: string }[] = [];
   for (const scene of script.scenes) {
-    console.log(`[${sessionId}] Creating task for scene ${scene.sceneNumber}...`);
-    const taskId = await createVideoTask(scene.prompt);
+    console.log(`[${sessionId}] Creating task for scene ${scene.sceneNumber} with quality: ${quality}...`);
+    const taskId = await createVideoTask(scene.prompt, quality);
     setSceneTaskId(sessionId, scene.sceneNumber, taskId);
     tasks.push({ sceneNumber: scene.sceneNumber, taskId });
     // Small delay between requests

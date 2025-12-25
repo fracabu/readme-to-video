@@ -13,8 +13,8 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Link2, FileText, Sparkles, Loader2 } from 'lucide-react';
-import type { AIProvider, GenerateRequest } from '@/types';
-import { PROVIDER_INFO, AVAILABLE_MODELS } from '@/types';
+import type { AIProvider, GenerateRequest, VideoQuality } from '@/types';
+import { PROVIDER_INFO, AVAILABLE_MODELS, VIDEO_QUALITY_INFO } from '@/types';
 
 interface InputSectionProps {
   onGenerate: (request: GenerateRequest) => Promise<void>;
@@ -27,6 +27,7 @@ export function InputSection({ onGenerate, isLoading }: InputSectionProps) {
   const [text, setText] = useState('');
   const [style, setStyle] = useState<'tech' | 'minimal' | 'energetic'>('tech');
   const [duration, setDuration] = useState<15 | 30 | 60>(15);
+  const [quality, setQuality] = useState<VideoQuality>('base');
   const [provider, setProvider] = useState<AIProvider>('openrouter');
   const [model, setModel] = useState<string>('');
 
@@ -39,6 +40,7 @@ export function InputSection({ onGenerate, isLoading }: InputSectionProps) {
       content,
       style,
       duration,
+      quality,
       provider,
       model: model || undefined,
     });
@@ -118,6 +120,22 @@ export function InputSection({ onGenerate, isLoading }: InputSectionProps) {
               </SelectContent>
             </Select>
           </div>
+        </div>
+
+        <div className="space-y-2">
+          <Label className="text-muted-foreground">Video Quality</Label>
+          <Select value={quality} onValueChange={(v) => setQuality(v as VideoQuality)}>
+            <SelectTrigger>
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {Object.entries(VIDEO_QUALITY_INFO).map(([key, info]) => (
+                <SelectItem key={key} value={key}>
+                  {info.name} - {info.description} ({info.price})
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
 
         <div className="grid grid-cols-2 gap-3">
