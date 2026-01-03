@@ -5,6 +5,7 @@ import { InputSection } from '@/components/input-section';
 import { ProgressSection } from '@/components/progress-section';
 import { ResultSection } from '@/components/result-section';
 import { GuideButton } from '@/components/guide-section';
+import { FloatingParticles } from '@/components/animated-loader';
 import { Github, AlertCircle, ExternalLink, Video, Sparkles, Bot } from 'lucide-react';
 import type { GenerateRequest } from '@/types';
 
@@ -62,7 +63,21 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen flex flex-col">
+    <main className="min-h-screen flex flex-col relative overflow-hidden">
+      {/* Animated gradient blobs */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div
+          className="absolute -top-1/4 -left-1/4 w-1/2 h-1/2 bg-primary/5 rounded-full blur-3xl animate-blob"
+        />
+        <div
+          className="absolute -bottom-1/4 -right-1/4 w-1/2 h-1/2 bg-orange-500/5 rounded-full blur-3xl animate-blob"
+          style={{ animationDelay: '2s' }}
+        />
+        <div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1/3 h-1/3 bg-primary/3 rounded-full blur-3xl animate-blob"
+          style={{ animationDelay: '4s' }}
+        />
+      </div>
       {/* Header */}
       <header className="border-b border-border/50 backdrop-blur-xl bg-background/80 sticky top-0 z-50">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
@@ -89,7 +104,9 @@ export default function Home() {
       </header>
 
       {/* Main Content */}
-      <div className="flex-1 container mx-auto px-4 py-4 md:py-8 flex items-start md:items-center justify-center overflow-y-auto">
+      <div className="flex-1 container mx-auto px-4 py-4 md:py-8 flex items-start md:items-center justify-center overflow-y-auto relative z-10">
+        {/* Animated floating particles */}
+        <FloatingParticles />
         {state === 'input' && (
           <InputSection onGenerate={handleGenerate} isLoading={isLoading} />
         )}
@@ -124,7 +141,7 @@ export default function Home() {
       </div>
 
       {/* Footer */}
-      <footer className="border-t border-border/50 py-3">
+      <footer className="border-t border-border/50 py-3 relative z-10 bg-background/80 backdrop-blur-sm">
         <div className="container mx-auto px-4 text-center text-xs text-muted-foreground space-y-2">
           <p className="flex items-center justify-center gap-1">
             Developed with love by{' '}
