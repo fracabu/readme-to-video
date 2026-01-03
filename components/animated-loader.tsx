@@ -156,17 +156,35 @@ export function AnimatedBackground({ children }: { children: React.ReactNode }) 
 
 // Floating particles effect
 export function FloatingParticles() {
+  // Use fixed positions to avoid hydration mismatch
+  const particles = [
+    { left: 10, top: 15, delay: 0, duration: 8, size: 3 },
+    { left: 25, top: 45, delay: 1, duration: 12, size: 4 },
+    { left: 40, top: 20, delay: 2, duration: 10, size: 3 },
+    { left: 55, top: 70, delay: 0.5, duration: 9, size: 5 },
+    { left: 70, top: 35, delay: 3, duration: 11, size: 3 },
+    { left: 85, top: 60, delay: 1.5, duration: 8, size: 4 },
+    { left: 15, top: 80, delay: 2.5, duration: 10, size: 3 },
+    { left: 30, top: 55, delay: 4, duration: 12, size: 4 },
+    { left: 60, top: 25, delay: 0.8, duration: 9, size: 3 },
+    { left: 75, top: 85, delay: 3.5, duration: 11, size: 5 },
+    { left: 90, top: 40, delay: 1.2, duration: 8, size: 3 },
+    { left: 5, top: 50, delay: 2.8, duration: 10, size: 4 },
+  ];
+
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {Array.from({ length: 20 }).map((_, i) => (
+    <div className="fixed inset-0 overflow-hidden pointer-events-none z-[1]">
+      {particles.map((p, i) => (
         <div
           key={i}
-          className="absolute w-1 h-1 bg-primary/20 rounded-full animate-float"
+          className="absolute bg-primary rounded-full animate-float opacity-50"
           style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-            animationDelay: `${Math.random() * 5}s`,
-            animationDuration: `${5 + Math.random() * 10}s`,
+            left: `${p.left}%`,
+            top: `${p.top}%`,
+            width: `${p.size}px`,
+            height: `${p.size}px`,
+            animationDelay: `${p.delay}s`,
+            animationDuration: `${p.duration}s`,
           }}
         />
       ))}

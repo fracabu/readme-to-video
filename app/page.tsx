@@ -67,14 +67,14 @@ export default function Home() {
       {/* Animated gradient blobs */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
         <div
-          className="absolute -top-1/4 -left-1/4 w-1/2 h-1/2 bg-primary/5 rounded-full blur-3xl animate-blob"
+          className="absolute -top-1/4 -left-1/4 w-1/2 h-1/2 bg-primary/20 rounded-full blur-3xl animate-blob"
         />
         <div
-          className="absolute -bottom-1/4 -right-1/4 w-1/2 h-1/2 bg-orange-500/5 rounded-full blur-3xl animate-blob"
+          className="absolute -bottom-1/4 -right-1/4 w-1/2 h-1/2 bg-orange-500/15 rounded-full blur-3xl animate-blob"
           style={{ animationDelay: '2s' }}
         />
         <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1/3 h-1/3 bg-primary/3 rounded-full blur-3xl animate-blob"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1/3 h-1/3 bg-primary/10 rounded-full blur-3xl animate-blob"
           style={{ animationDelay: '4s' }}
         />
       </div>
@@ -103,10 +103,11 @@ export default function Home() {
         </div>
       </header>
 
+      {/* Animated floating particles - behind content */}
+      <FloatingParticles />
+
       {/* Main Content */}
       <div className="flex-1 container mx-auto px-4 py-4 md:py-8 flex items-start md:items-center justify-center overflow-y-auto relative z-10">
-        {/* Animated floating particles */}
-        <FloatingParticles />
         {state === 'input' && (
           <InputSection onGenerate={handleGenerate} isLoading={isLoading} />
         )}

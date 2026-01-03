@@ -79,9 +79,9 @@
 }
 
 @layer components {
-  /* Glassmorphism card */
+  /* Glassmorphism card - solid background to hide particles */
   .glass-card {
-    @apply bg-card/50 backdrop-blur-xl border border-border/50 rounded-xl;
+    @apply bg-card border border-border/50 rounded-xl;
   }
 
   /* Mux-style gradient border */

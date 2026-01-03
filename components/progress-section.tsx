@@ -6,7 +6,7 @@ import { Progress } from '@/components/ui/progress';
 import { Check, Loader2, Circle, AlertCircle, FileText } from 'lucide-react';
 import type { Session, VideoScript } from '@/types';
 import { cn } from '@/lib/utils';
-import { VideoGenerationLoader, FloatingParticles, WaveLoader } from './animated-loader';
+import { VideoGenerationLoader, WaveLoader } from './animated-loader';
 
 interface ProgressSectionProps {
   sessionId: string;
@@ -129,9 +129,6 @@ export function ProgressSection({ sessionId, onComplete, onError }: ProgressSect
 
   return (
     <div className="w-full max-w-6xl mx-auto relative">
-      {/* Floating particles background */}
-      <FloatingParticles />
-
       <div className="flex flex-col lg:flex-row gap-6 relative z-10">
         {/* Left: Process Status */}
         <div className="lg:w-80 flex-shrink-0">
