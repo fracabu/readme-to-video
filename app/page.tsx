@@ -156,10 +156,15 @@ export default function Home() {
               fracabu
             </a>
             {' '}&amp;{' '}
-            <span className="inline-flex items-center gap-1 text-foreground font-medium">
+            <a
+              href="https://claude.ai"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 text-foreground font-medium hover:text-primary transition-colors"
+            >
               <Bot className="w-3.5 h-3.5" />
               Claude Opus 4.5
-            </span>
+            </a>
           </p>
           <div className="flex items-center justify-center gap-3 flex-wrap">
             <span>Powered by</span>
