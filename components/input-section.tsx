@@ -12,7 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Link2, FileText, Sparkles, Loader2, Key, ChevronDown, ChevronUp, Save } from 'lucide-react';
+import { Link2, FileText, Sparkles, Loader2, Key, ChevronDown, ChevronUp, Save, AlertTriangle, Clock } from 'lucide-react';
 import type { AIProvider, GenerateRequest, VideoQuality, UserApiKeys } from '@/types';
 import { PROVIDER_INFO, AVAILABLE_MODELS, VIDEO_QUALITY_INFO } from '@/types';
 
@@ -303,6 +303,24 @@ export function InputSection({ onGenerate, isLoading }: InputSectionProps) {
               </Select>
             </div>
           </div>
+
+          {/* Duration info banner */}
+          {duration === 60 && (
+            <div className="flex items-start gap-2 p-2 rounded-md bg-amber-500/10 border border-amber-500/20 text-xs">
+              <AlertTriangle className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
+              <div className="text-amber-200">
+                <strong>60s videos</strong> generate 4 scenes (~10-20 min). On free hosting they may timeout.
+                For best results use <strong>15-30s</strong>, or run locally for 60s.
+              </div>
+            </div>
+          )}
+
+          {duration !== 60 && (
+            <div className="flex items-center gap-2 text-xs text-muted-foreground">
+              <Clock className="w-3.5 h-3.5" />
+              <span>{duration === 15 ? '1 scene • ~2-5 min' : '2 scenes • ~5-10 min'}</span>
+            </div>
+          )}
 
           <div className="grid grid-cols-2 gap-2">
             <div className="space-y-1">

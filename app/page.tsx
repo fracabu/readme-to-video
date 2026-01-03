@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { InputSection } from '@/components/input-section';
 import { ProgressSection } from '@/components/progress-section';
 import { ResultSection } from '@/components/result-section';
+import { GuideButton } from '@/components/guide-section';
 import { Github, AlertCircle, ExternalLink, Video, Sparkles, Bot } from 'lucide-react';
 import type { GenerateRequest } from '@/types';
 
@@ -174,6 +175,9 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      {/* Help button */}
+      <GuideButton />
     </main>
   );
 }

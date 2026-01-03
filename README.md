@@ -92,6 +92,33 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
+### Live Demo
+
+🚀 **Try it now:** [readme2video.onrender.com](https://readme2video.onrender.com)
+
+> **Note:** The demo runs on Render free tier. For 60-second videos (4 scenes), we recommend running locally as free hosting may timeout during long generations.
+
+### Deploy Your Own
+
+#### Render (Recommended for BYOK)
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy)
+
+1. Fork this repository
+2. Connect to Render and select your fork
+3. Render will auto-detect the `render.yaml` configuration
+4. No environment variables needed - users provide their own API keys (BYOK)
+
+**Why Render?** Unlike serverless platforms (Vercel, Netlify), Render runs as a persistent Node.js process, allowing long-running video generation without timeouts.
+
+#### Vercel
+
+Works for 15-30s videos. 60s videos may timeout on free tier.
+
+```bash
+vercel deploy
+```
+
 ### Environment Variables
 
 ```env
@@ -237,6 +264,23 @@ npm run dev
 ```
 
 Apri [http://localhost:3000](http://localhost:3000) nel browser.
+
+### Demo Live
+
+🚀 **Provalo ora:** [readme2video.onrender.com](https://readme2video.onrender.com)
+
+> **Nota:** La demo gira su Render free tier. Per video da 60 secondi (4 scene), consigliamo di eseguire in locale poiché l'hosting gratuito potrebbe andare in timeout.
+
+### Deploy
+
+#### Render (Consigliato per BYOK)
+
+1. Fai fork del repository
+2. Connetti a Render e seleziona il tuo fork
+3. Render rileverà automaticamente la configurazione `render.yaml`
+4. Nessuna variabile d'ambiente necessaria - gli utenti usano le proprie API key (BYOK)
+
+**Perché Render?** A differenza delle piattaforme serverless (Vercel, Netlify), Render funziona come processo Node.js persistente, permettendo generazioni video lunghe senza timeout.
 
 ### Variabili d'Ambiente
 
