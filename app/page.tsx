@@ -61,7 +61,7 @@ export default function Home() {
   };
 
   return (
-    <main className="h-screen flex flex-col overflow-hidden">
+    <main className="min-h-screen flex flex-col">
       {/* Header */}
       <header className="border-b border-border/50 backdrop-blur-xl bg-background/80 sticky top-0 z-50">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
@@ -88,7 +88,7 @@ export default function Home() {
       </header>
 
       {/* Main Content */}
-      <div className="flex-1 container mx-auto px-4 py-4 flex items-center justify-center">
+      <div className="flex-1 container mx-auto px-4 py-4 md:py-8 flex items-start md:items-center justify-center overflow-y-auto">
         {state === 'input' && (
           <InputSection onGenerate={handleGenerate} isLoading={isLoading} />
         )}
@@ -124,14 +124,20 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="border-t border-border/50 py-3">
-        <div className="container mx-auto px-4 text-center text-xs text-muted-foreground">
+        <div className="container mx-auto px-4 text-center text-xs text-muted-foreground space-y-1">
+          <p>
+            Developed with love by{' '}
+            <span className="text-foreground font-medium">fracabu</span>
+            {' '}&amp;{' '}
+            <span className="text-foreground font-medium">Claude Opus 4.5</span>
+          </p>
           <p>
             Powered by{' '}
-            <span className="text-foreground font-medium">Claude AI</span>
-            {' '}&bull;{' '}
-            <span className="text-foreground font-medium">Sora 2</span>
-            {' '}&bull;{' '}
             <span className="text-foreground font-medium">Mux</span>
+            {' '}&bull;{' '}
+            <span className="text-foreground font-medium">Kie AI Sora 2</span>
+            {' '}&bull;{' '}
+            <span className="text-foreground font-medium">OpenRouter</span>
           </p>
         </div>
       </footer>
