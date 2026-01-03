@@ -6,6 +6,7 @@ import { Progress } from '@/components/ui/progress';
 import { Check, Loader2, Circle, AlertCircle, FileText } from 'lucide-react';
 import type { Session, VideoScript } from '@/types';
 import { cn } from '@/lib/utils';
+import { VideoGenerationLoader, FloatingParticles, WaveLoader } from './animated-loader';
 
 interface ProgressSectionProps {
   sessionId: string;
@@ -127,15 +128,18 @@ export function ProgressSection({ sessionId, onComplete, onError }: ProgressSect
   };
 
   return (
-    <div className="w-full max-w-6xl mx-auto">
-      <div className="flex flex-col lg:flex-row gap-6">
+    <div className="w-full max-w-6xl mx-auto relative">
+      {/* Floating particles background */}
+      <FloatingParticles />
+
+      <div className="flex flex-col lg:flex-row gap-6 relative z-10">
         {/* Left: Process Status */}
         <div className="lg:w-80 flex-shrink-0">
           <Card className="glass-card h-full">
             <CardHeader className="pb-2">
               <CardTitle className="text-lg flex items-center gap-2">
-                <Loader2 className="w-5 h-5 text-primary animate-spin" />
-                Progress
+                <WaveLoader className="scale-75" />
+                <span className="ml-1">Progress</span>
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -238,9 +242,10 @@ export function ProgressSection({ sessionId, onComplete, onError }: ProgressSect
                 </div>
               ) : (
                 <div className="flex flex-col items-center justify-center py-12 text-muted-foreground">
-                  <Loader2 className="w-8 h-8 animate-spin mb-3 text-primary/50" />
-                  <p className="text-sm">Generating script...</p>
+                  <VideoGenerationLoader progress={overallProgress} />
+                  <p className="text-sm mt-4">Generating script...</p>
                   <p className="text-xs mt-1">Analyzing your README content</p>
+                  <WaveLoader className="mt-4" />
                 </div>
               )}
             </CardContent>
