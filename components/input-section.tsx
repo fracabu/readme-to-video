@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -12,9 +12,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Link2, FileText, Sparkles, Loader2, Key, ChevronDown, ChevronUp } from 'lucide-react';
+import { Link2, FileText, Sparkles, Loader2, Key, ChevronDown, ChevronUp, Save } from 'lucide-react';
 import type { AIProvider, GenerateRequest, VideoQuality, UserApiKeys } from '@/types';
 import { PROVIDER_INFO, AVAILABLE_MODELS, VIDEO_QUALITY_INFO } from '@/types';
+
+const STORAGE_KEY = 'readme2video_api_keys';
 
 interface InputSectionProps {
   onGenerate: (request: GenerateRequest) => Promise<void>;
@@ -37,6 +39,37 @@ export function InputSection({ onGenerate, isLoading }: InputSectionProps) {
   const [muxTokenId, setMuxTokenId] = useState('');
   const [muxTokenSecret, setMuxTokenSecret] = useState('');
   const [llmApiKey, setLlmApiKey] = useState('');
+  const [saveKeys, setSaveKeys] = useState(true);
+  const [keysLoaded, setKeysLoaded] = useState(false);
+
+  // Load saved API keys from localStorage on mount
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        const keys = JSON.parse(saved);
+        if (keys.kieApiKey) setKieApiKey(keys.kieApiKey);
+        if (keys.muxTokenId) setMuxTokenId(keys.muxTokenId);
+        if (keys.muxTokenSecret) setMuxTokenSecret(keys.muxTokenSecret);
+        if (keys.llmApiKey) setLlmApiKey(keys.llmApiKey);
+      }
+    } catch (e) {
+      console.error('Failed to load saved API keys:', e);
+    }
+    setKeysLoaded(true);
+  }, []);
+
+  // Save API keys to localStorage when they change
+  useEffect(() => {
+    if (!keysLoaded) return; // Don't save before loading
+
+    if (saveKeys) {
+      const keys = { kieApiKey, muxTokenId, muxTokenSecret, llmApiKey };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(keys));
+    } else {
+      localStorage.removeItem(STORAGE_KEY);
+    }
+  }, [kieApiKey, muxTokenId, muxTokenSecret, llmApiKey, saveKeys, keysLoaded]);
 
   const handleSubmit = async () => {
     const content = source === 'url' ? url : text;
@@ -170,6 +203,18 @@ export function InputSection({ onGenerate, isLoading }: InputSectionProps) {
                   <a href="https://openrouter.ai/keys" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">openrouter.ai</a> (free key, free models)
                 </p>
               </div>
+
+              {/* Save keys checkbox */}
+              <label className="flex items-center gap-2 cursor-pointer pt-2 border-t border-border">
+                <input
+                  type="checkbox"
+                  checked={saveKeys}
+                  onChange={(e) => setSaveKeys(e.target.checked)}
+                  className="w-4 h-4 rounded border-border"
+                />
+                <Save className="w-3.5 h-3.5 text-muted-foreground" />
+                <span className="text-sm text-muted-foreground">Save keys locally</span>
+              </label>
             </div>
           )}
 
