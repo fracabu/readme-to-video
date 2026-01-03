@@ -28,10 +28,18 @@ npm start        # Start production server
 ### Data Flow
 
 1. **Input**: User submits GitHub URL or raw README text via `/api/generate`
+   - GitHub URLs are fetched via `lib/github.ts` (tries `main`/`master` branches, multiple README filenames)
 2. **LLM Processing**: Multi-provider factory (`lib/llm/index.ts`) analyzes README and generates video script
 3. **Video Generation**: `lib/kie.ts` sends prompts to Kie.ai Sora 2, polls for completion
 4. **Hosting**: `lib/mux.ts` uploads completed video to Mux for streaming
 5. **Real-time Updates**: SSE stream at `/api/status/[sessionId]` pushes progress to frontend
+
+### BYOK (Bring Your Own Keys)
+
+The app uses a BYOK model - users must provide their own API keys for all services:
+- `UserApiKeys` type in `types/index.ts` defines the required keys
+- Keys are passed per-request, not stored server-side
+- Required: Kie.ai key, Mux credentials, and one LLM provider key
 
 ### Session Management
 

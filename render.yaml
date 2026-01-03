@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: readme2video
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NEXT_PUBLIC_APP_URL
+        sync: false
+      - key: DEFAULT_LLM_PROVIDER
+        value: openrouter
+      # Note: With BYOK, users provide their own API keys
+      # These are optional fallbacks for testing
+      - key: KIE_API_KEY
+        sync: false
+      - key: MUX_TOKEN_ID
+        sync: false
+      - key: MUX_TOKEN_SECRET
+        sync: false
+      - key: OPENROUTER_API_KEY
+        sync: false
+    healthCheckPath: /

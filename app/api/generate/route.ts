@@ -1,5 +1,15 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
+
+// Vercel-specific: keeps serverless function alive for background work
+let waitUntil: ((promise: Promise<unknown>) => void) | undefined;
+try {
+  // Only import on Vercel
+  const vercelFunctions = require('@vercel/functions');
+  waitUntil = vercelFunctions.waitUntil;
+} catch {
+  // Not on Vercel (e.g., Render, Railway) - no-op
+}
 import { fetchReadmeFromGitHub, isValidGitHubUrl } from '@/lib/github';
 import { createLLMProvider } from '@/lib/llm';
 import { createVideoTask, waitForTaskCompletion } from '@/lib/kie';
@@ -59,7 +69,7 @@ export async function POST(request: Request) {
     const session = createSession(readme);
 
     // Start async processing with user-provided API keys (BYOK)
-    processVideo(
+    const processingPromise = processVideo(
       session.id,
       readme,
       data.style,
@@ -72,6 +82,12 @@ export async function POST(request: Request) {
       console.error('Video processing error:', error);
       updateSessionStatus(session.id, 'error', error.message);
     });
+
+    // On Vercel: use waitUntil to extend function lifetime
+    // On Render/Railway: runs as persistent Node.js process (no timeout)
+    if (waitUntil) {
+      waitUntil(processingPromise);
+    }
 
     return NextResponse.json({
       sessionId: session.id,

@@ -100,10 +100,16 @@ export async function getTaskStatus(taskId: string, apiKey: string): Promise<{
   }
 
   const result = await response.json();
+
+  // Debug: log full response
+  console.log(`[Kie.ai] Full recordInfo response for ${taskId}:`, JSON.stringify(result, null, 2));
+
   const data = result.data || result;
 
   // Parse state (from working Python code)
   const state = (data.state || data.status || '').toLowerCase();
+
+  console.log(`[Kie.ai] Task ${taskId} - state: "${state}", has resultJson: ${!!data.resultJson}`);
 
   // Parse video URL from resultJson if success
   let videoUrl: string | undefined;
@@ -112,10 +118,12 @@ export async function getTaskStatus(taskId: string, apiKey: string): Promise<{
       const resultData = typeof data.resultJson === 'string'
         ? JSON.parse(data.resultJson)
         : data.resultJson;
+      console.log(`[Kie.ai] Parsed resultJson:`, JSON.stringify(resultData, null, 2));
       const urls = resultData.resultUrls || resultData.result_urls || [];
       videoUrl = urls[0];
+      console.log(`[Kie.ai] Extracted videoUrl: ${videoUrl}`);
     } catch (e) {
-      console.error('Error parsing resultJson:', e);
+      console.error('[Kie.ai] Error parsing resultJson:', e, 'Raw:', data.resultJson);
     }
   }
 
