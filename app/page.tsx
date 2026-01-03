@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { InputSection } from '@/components/input-section';
 import { ProgressSection } from '@/components/progress-section';
 import { ResultSection } from '@/components/result-section';
-import { Github, AlertCircle } from 'lucide-react';
+import { Github, AlertCircle, ExternalLink, Video, Sparkles, Bot } from 'lucide-react';
 import type { GenerateRequest } from '@/types';
 
 type AppState = 'input' | 'processing' | 'result' | 'error';
@@ -124,21 +124,54 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="border-t border-border/50 py-3">
-        <div className="container mx-auto px-4 text-center text-xs text-muted-foreground space-y-1">
-          <p>
+        <div className="container mx-auto px-4 text-center text-xs text-muted-foreground space-y-2">
+          <p className="flex items-center justify-center gap-1">
             Developed with love by{' '}
-            <span className="text-foreground font-medium">fracabu</span>
+            <a
+              href="https://github.com/fracabu"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 text-foreground font-medium hover:text-primary transition-colors"
+            >
+              <Github className="w-3.5 h-3.5" />
+              fracabu
+            </a>
             {' '}&amp;{' '}
-            <span className="text-foreground font-medium">Claude Opus 4.5</span>
+            <span className="inline-flex items-center gap-1 text-foreground font-medium">
+              <Bot className="w-3.5 h-3.5" />
+              Claude Opus 4.5
+            </span>
           </p>
-          <p>
-            Powered by{' '}
-            <span className="text-foreground font-medium">Mux</span>
-            {' '}&bull;{' '}
-            <span className="text-foreground font-medium">Kie AI Sora 2</span>
-            {' '}&bull;{' '}
-            <span className="text-foreground font-medium">OpenRouter</span>
-          </p>
+          <div className="flex items-center justify-center gap-3 flex-wrap">
+            <span>Powered by</span>
+            <a
+              href="https://mux.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 text-foreground font-medium hover:text-primary transition-colors"
+            >
+              <Video className="w-3.5 h-3.5" />
+              Mux
+            </a>
+            <a
+              href="https://kie.ai"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 text-foreground font-medium hover:text-primary transition-colors"
+            >
+              <Sparkles className="w-3.5 h-3.5" />
+              Kie AI Sora 2
+            </a>
+            <a
+              href="https://openrouter.ai"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 text-foreground font-medium hover:text-primary transition-colors"
+            >
+              <Bot className="w-3.5 h-3.5" />
+              OpenRouter
+            </a>
+          </div>
         </div>
       </footer>
     </main>
