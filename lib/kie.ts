@@ -11,15 +11,19 @@ const QUALITY_MODELS: Record<VideoQuality, { model: string; size?: string }> = {
 
 /**
  * Create a video generation task with Kie.ai Sora 2
+ * @param prompt - The video generation prompt
+ * @param apiKey - User-provided Kie.ai API key (BYOK)
+ * @param quality - Video quality tier
+ * @param callbackUrl - Optional webhook URL
  */
 export async function createVideoTask(
   prompt: string,
+  apiKey: string,
   quality: VideoQuality = 'base',
   callbackUrl?: string
 ): Promise<string> {
-  const apiKey = process.env.KIE_API_KEY;
   if (!apiKey) {
-    throw new Error('KIE_API_KEY is not configured');
+    throw new Error('Kie.ai API key is required');
   }
 
   const qualityConfig = QUALITY_MODELS[quality];
@@ -70,15 +74,16 @@ export async function createVideoTask(
 
 /**
  * Check the status of a video generation task using recordInfo endpoint
+ * @param taskId - The task ID to check
+ * @param apiKey - User-provided Kie.ai API key (BYOK)
  */
-export async function getTaskStatus(taskId: string): Promise<{
+export async function getTaskStatus(taskId: string, apiKey: string): Promise<{
   state: string;
   videoUrl?: string;
   error?: string;
 }> {
-  const apiKey = process.env.KIE_API_KEY;
   if (!apiKey) {
-    throw new Error('KIE_API_KEY is not configured');
+    throw new Error('Kie.ai API key is required');
   }
 
   // Use GET with query parameter (from documentation)
@@ -123,16 +128,21 @@ export async function getTaskStatus(taskId: string): Promise<{
 
 /**
  * Poll for task completion
+ * @param taskId - The task ID to poll
+ * @param apiKey - User-provided Kie.ai API key (BYOK)
+ * @param maxAttempts - Maximum polling attempts
+ * @param intervalMs - Polling interval in milliseconds
  */
 export async function waitForTaskCompletion(
   taskId: string,
+  apiKey: string,
   maxAttempts: number = 60,
   intervalMs: number = 10000
 ): Promise<string> {
   console.log(`Waiting for task ${taskId} to complete...`);
 
   for (let attempt = 0; attempt < maxAttempts; attempt++) {
-    const status = await getTaskStatus(taskId);
+    const status = await getTaskStatus(taskId, apiKey);
     console.log(`Task ${taskId} status: ${status.state} (attempt ${attempt + 1}/${maxAttempts})`);
 
     if (status.state === 'success' && status.videoUrl) {

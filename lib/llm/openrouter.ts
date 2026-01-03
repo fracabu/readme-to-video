@@ -7,9 +7,14 @@ export class OpenRouterProvider implements LLMProvider {
   private client: OpenAI;
   private model: string;
 
-  constructor(model?: string) {
+  constructor(model?: string, apiKey?: string) {
+    // Use provided API key or fall back to env var (for free models)
+    const key = apiKey || process.env.OPENROUTER_API_KEY;
+    if (!key) {
+      throw new Error('OpenRouter API key is required');
+    }
     this.client = new OpenAI({
-      apiKey: process.env.OPENROUTER_API_KEY,
+      apiKey: key,
       baseURL: 'https://openrouter.ai/api/v1',
     });
     this.model = model || 'google/gemini-2.0-flash-exp:free';

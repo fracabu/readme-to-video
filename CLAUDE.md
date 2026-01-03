@@ -19,6 +19,10 @@ npm run lint     # ESLint
 npm start        # Start production server
 ```
 
+## Prerequisites
+
+- **FFmpeg**: Required for multi-scene video concatenation with crossfade transitions. Must be installed and available in PATH.
+
 ## Architecture
 
 ### Data Flow
@@ -86,11 +90,14 @@ DEFAULT_LLM_PROVIDER=openrouter
 
 ## Important Implementation Details
 
-- **Single Scene MVP**: Currently generates 1 scene (~15s) instead of multi-scene concatenation
+- **Multi-Scene Support**: Generates 1 scene (15s), 2 scenes (30s), or 4 scenes (60s). Multiple scenes are concatenated via FFmpeg with crossfade transitions (`lib/ffmpeg.ts`).
+- **Video Quality Tiers**: Three quality options via Kie.ai Sora 2:
+  - `base` ($0.15/scene) - Standard 720p
+  - `pro` ($1.35/scene) - Enhanced 720p
+  - `pro-hd` ($3.15/scene) - 1080p
 - **Polling over Webhooks**: Video generation uses polling (`waitForTaskCompletion`) rather than callbacks for reliability
 - **Content Policy**: LLM prompts include strict guidelines to avoid brand names and copyrighted content (prevents Sora 2 rejections)
 - **Mux Video Quality**: Set to `basic` tier for cost efficiency
-- **Video cost**: $0.15 per 10-15s clip via Kie.ai
 - **Generation time**: 2-5 minutes per scene
 
 ## External API Documentation

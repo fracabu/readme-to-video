@@ -1,29 +1,37 @@
 import Mux from '@mux/mux-node';
 
-// Lazy initialize Mux client
-let muxClient: Mux | null = null;
+// Mux credentials type for BYOK
+export interface MuxCredentials {
+  tokenId: string;
+  tokenSecret: string;
+}
 
-function getMuxClient(): Mux {
-  if (!muxClient) {
-    if (!process.env.MUX_TOKEN_ID || !process.env.MUX_TOKEN_SECRET) {
-      throw new Error('MUX_TOKEN_ID and MUX_TOKEN_SECRET must be configured');
-    }
-    muxClient = new Mux({
-      tokenId: process.env.MUX_TOKEN_ID,
-      tokenSecret: process.env.MUX_TOKEN_SECRET,
-    });
+/**
+ * Create a Mux client with user-provided credentials (BYOK)
+ */
+function createMuxClient(credentials: MuxCredentials): Mux {
+  if (!credentials.tokenId || !credentials.tokenSecret) {
+    throw new Error('Mux Token ID and Token Secret are required');
   }
-  return muxClient;
+  return new Mux({
+    tokenId: credentials.tokenId,
+    tokenSecret: credentials.tokenSecret,
+  });
 }
 
 /**
  * Create a Mux asset from a video URL
+ * @param videoUrl - URL of the video to create asset from
+ * @param credentials - User-provided Mux credentials (BYOK)
  */
-export async function createAssetFromUrl(videoUrl: string): Promise<{
+export async function createAssetFromUrl(
+  videoUrl: string,
+  credentials: MuxCredentials
+): Promise<{
   assetId: string;
   playbackId: string;
 }> {
-  const mux = getMuxClient();
+  const mux = createMuxClient(credentials);
   const asset = await mux.video.assets.create({
     input: [{ url: videoUrl }],
     playback_policy: ['public'],
@@ -43,13 +51,18 @@ export async function createAssetFromUrl(videoUrl: string): Promise<{
 
 /**
  * Wait for a Mux asset to be ready
+ * @param assetId - The asset ID to wait for
+ * @param credentials - User-provided Mux credentials (BYOK)
+ * @param maxAttempts - Maximum polling attempts
+ * @param intervalMs - Polling interval in milliseconds
  */
 export async function waitForAssetReady(
   assetId: string,
+  credentials: MuxCredentials,
   maxAttempts: number = 60,
   intervalMs: number = 3000
 ): Promise<void> {
-  const mux = getMuxClient();
+  const mux = createMuxClient(credentials);
   for (let attempt = 0; attempt < maxAttempts; attempt++) {
     const asset = await mux.video.assets.retrieve(assetId);
 
@@ -93,20 +106,27 @@ export function getThumbnailUrl(
 
 /**
  * Delete a Mux asset
+ * @param assetId - The asset ID to delete
+ * @param credentials - User-provided Mux credentials (BYOK)
  */
-export async function deleteAsset(assetId: string): Promise<void> {
-  const mux = getMuxClient();
+export async function deleteAsset(assetId: string, credentials: MuxCredentials): Promise<void> {
+  const mux = createMuxClient(credentials);
   await mux.video.assets.delete(assetId);
 }
 
 /**
  * Create a direct upload URL (for future use)
+ * @param credentials - User-provided Mux credentials (BYOK)
+ * @param corsOrigin - Optional CORS origin
  */
-export async function createUploadUrl(corsOrigin?: string): Promise<{
+export async function createUploadUrl(
+  credentials: MuxCredentials,
+  corsOrigin?: string
+): Promise<{
   uploadId: string;
   uploadUrl: string;
 }> {
-  const mux = getMuxClient();
+  const mux = createMuxClient(credentials);
   const origin = corsOrigin || process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
   const upload = await mux.video.uploads.create({
     new_asset_settings: {
@@ -124,12 +144,17 @@ export async function createUploadUrl(corsOrigin?: string): Promise<{
 
 /**
  * Create a Mux asset from a local file path using direct upload
+ * @param filePath - Path to the video file
+ * @param credentials - User-provided Mux credentials (BYOK)
  */
-export async function createAssetFromFile(filePath: string): Promise<{
+export async function createAssetFromFile(
+  filePath: string,
+  credentials: MuxCredentials
+): Promise<{
   assetId: string;
   playbackId: string;
 }> {
-  const mux = getMuxClient();
+  const mux = createMuxClient(credentials);
 
   // Create a direct upload URL
   const upload = await mux.video.uploads.create({
@@ -189,4 +214,3 @@ export async function createAssetFromFile(filePath: string): Promise<{
   };
 }
 
-export { getMuxClient };

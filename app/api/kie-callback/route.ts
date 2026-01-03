@@ -2,18 +2,23 @@ import { NextResponse } from 'next/server';
 import {
   findSessionByTaskId,
   updateSceneStatus,
-  areAllScenesReady,
-  getSceneVideoUrls,
   updateSessionStatus,
-  setSessionResult,
 } from '@/lib/session-store';
-import { createAssetFromUrl, waitForAssetReady } from '@/lib/mux';
 import type { KieCallbackPayload } from '@/types';
 
+/**
+ * DEPRECATED: This webhook callback route is not compatible with BYOK mode.
+ * The app now uses polling for video completion instead of webhooks.
+ *
+ * With BYOK (Bring Your Own Keys), we don't have access to user API keys
+ * in webhook callbacks, so finalization must happen in the polling flow.
+ *
+ * This endpoint is kept for backwards compatibility but only updates scene status.
+ */
 export async function POST(request: Request) {
   try {
     const payload: KieCallbackPayload = await request.json();
-    console.log('Kie.ai callback received:', payload);
+    console.log('Kie.ai callback received (BYOK mode - limited functionality):', payload);
 
     const { taskId, status, output, error } = payload;
 
@@ -27,17 +32,9 @@ export async function POST(request: Request) {
     const { session, sceneNumber } = result;
 
     if (status === 'succeed' && output?.videoUrl) {
-      // Mark scene as ready
+      // Mark scene as ready - finalization happens in the polling flow
       updateSceneStatus(session.id, sceneNumber, 'ready', output.videoUrl);
-
-      // Check if all scenes are ready
-      if (areAllScenesReady(session.id)) {
-        // Start finalization
-        finalizeVideo(session.id).catch((err) => {
-          console.error('Finalization error:', err);
-          updateSessionStatus(session.id, 'error', err.message);
-        });
-      }
+      console.log(`Scene ${sceneNumber} marked as ready via callback. Finalization will occur in polling flow.`);
     } else if (status === 'failed') {
       updateSceneStatus(session.id, sceneNumber, 'failed');
       updateSessionStatus(session.id, 'error', error || 'Video generation failed');
@@ -48,30 +45,4 @@ export async function POST(request: Request) {
     console.error('Kie callback error:', error);
     return NextResponse.json({ message: 'Error processing callback' }, { status: 500 });
   }
-}
-
-async function finalizeVideo(sessionId: string) {
-  updateSessionStatus(sessionId, 'finalizing');
-
-  const videoUrls = getSceneVideoUrls(sessionId);
-  if (videoUrls.length === 0) {
-    throw new Error('No video URLs available');
-  }
-
-  // For MVP, we'll use the first video or concatenate them
-  // In production, use FFmpeg to properly concatenate
-  // For now, just upload the first video to Mux
-  // TODO: Implement proper video concatenation
-
-  // Use the first video for now (or implement concatenation)
-  const mainVideoUrl = videoUrls[0];
-
-  // Upload to Mux
-  const { assetId, playbackId } = await createAssetFromUrl(mainVideoUrl);
-
-  // Wait for Mux to process
-  await waitForAssetReady(assetId);
-
-  // Mark session as ready
-  setSessionResult(sessionId, playbackId, mainVideoUrl);
 }

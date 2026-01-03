@@ -67,6 +67,14 @@ export interface Session {
 // API Request/Response Types
 export type VideoQuality = 'base' | 'pro' | 'pro-hd';
 
+// BYOK (Bring Your Own Keys) - User-provided API keys
+export interface UserApiKeys {
+  kieApiKey: string;
+  muxTokenId: string;
+  muxTokenSecret: string;
+  llmApiKey: string; // Required: OpenRouter (free), Anthropic, OpenAI, or Gemini
+}
+
 export interface GenerateRequest {
   source: 'url' | 'text';
   content: string;
@@ -75,6 +83,8 @@ export interface GenerateRequest {
   quality: VideoQuality;
   provider?: AIProvider;
   model?: string;
+  // BYOK: User-provided API keys
+  apiKeys: UserApiKeys;
 }
 
 export const VIDEO_QUALITY_INFO: Record<VideoQuality, { name: string; description: string; price: string }> = {

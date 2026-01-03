@@ -14,16 +14,22 @@ export interface LLMProvider {
   generateScript(analysis: ReadmeAnalysis, options: ScriptOptions): Promise<VideoScript>;
 }
 
-export function createLLMProvider(type: AIProvider, model?: string): LLMProvider {
+/**
+ * Create an LLM provider instance
+ * @param type - The provider type
+ * @param model - Optional model override
+ * @param apiKey - Optional user-provided API key (BYOK)
+ */
+export function createLLMProvider(type: AIProvider, model?: string, apiKey?: string): LLMProvider {
   switch (type) {
     case 'anthropic':
-      return new AnthropicProvider(model);
+      return new AnthropicProvider(model, apiKey);
     case 'openai':
-      return new OpenAIProvider(model);
+      return new OpenAIProvider(model, apiKey);
     case 'gemini':
-      return new GeminiProvider(model);
+      return new GeminiProvider(model, apiKey);
     case 'openrouter':
-      return new OpenRouterProvider(model);
+      return new OpenRouterProvider(model, apiKey);
     default:
       throw new Error(`Unknown provider: ${type}`);
   }
