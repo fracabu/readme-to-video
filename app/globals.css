@@ -34,6 +34,12 @@
     --input: 0 0% 14%;
     --ring: 16 100% 60%;
 
+    /* Mux-style neon accents */
+    --neon-green: 145 100% 50%;
+    --neon-cyan: 180 100% 50%;
+    --neon-magenta: 300 100% 60%;
+    --neon-blue: 210 100% 60%;
+
     --radius: 0.75rem;
   }
 }
@@ -56,6 +62,11 @@
   /* Monospace for tech elements */
   .font-mono, code, .tech-text {
     font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  }
+
+  /* Aldrich font for logo (Mux-style) */
+  .font-aldrich {
+    font-family: var(--font-aldrich), sans-serif;
   }
 
   /* Custom scrollbar */
@@ -178,6 +189,8 @@
   .pushable:hover .front {
     transform: translateY(-6px);
     transition: transform 250ms cubic-bezier(.3, .7, .4, 1.5);
+    box-shadow: 0 0 20px hsl(16deg 100% 55% / 0.5),
+                0 0 40px hsl(16deg 100% 55% / 0.3);
   }
 
   .pushable:hover .shadow {
@@ -204,12 +217,12 @@
     transform: translateY(-4px);
   }
 
-  /* Subtle grid background */
+  /* Macroblock grid background (Mux-style 16x16 inspired) */
   .grid-bg {
     background-image:
-      linear-gradient(hsl(var(--border) / 0.3) 1px, transparent 1px),
-      linear-gradient(90deg, hsl(var(--border) / 0.3) 1px, transparent 1px);
-    background-size: 50px 50px;
+      linear-gradient(hsl(var(--primary) / 0.08) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--primary) / 0.08) 1px, transparent 1px);
+    background-size: 32px 32px;
   }
 }
 
@@ -217,6 +230,38 @@
   /* Text gradient */
   .text-gradient {
     @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-orange-400;
+  }
+
+  /* Neon glow effects */
+  .glow-green {
+    box-shadow: 0 0 10px hsl(var(--neon-green) / 0.5),
+                0 0 20px hsl(var(--neon-green) / 0.3);
+  }
+
+  .glow-cyan {
+    box-shadow: 0 0 10px hsl(var(--neon-cyan) / 0.5),
+                0 0 20px hsl(var(--neon-cyan) / 0.3);
+  }
+
+  .glow-magenta {
+    box-shadow: 0 0 10px hsl(var(--neon-magenta) / 0.5),
+                0 0 20px hsl(var(--neon-magenta) / 0.3);
+  }
+
+  .text-neon-green {
+    color: hsl(var(--neon-green));
+  }
+
+  .text-neon-cyan {
+    color: hsl(var(--neon-cyan));
+  }
+
+  .text-neon-magenta {
+    color: hsl(var(--neon-magenta));
+  }
+
+  .bg-neon-green {
+    background-color: hsl(var(--neon-green));
   }
 
   /* Animation delay utilities */
@@ -302,4 +347,54 @@
 .animate-gradient {
   background-size: 200% 200%;
   animation: gradient-shift 3s ease infinite;
+}
+
+/* Playful hover animations */
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-10deg); }
+  75% { transform: rotate(10deg); }
+}
+
+@keyframes bounce-subtle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.2); }
+}
+
+.hover-wiggle:hover {
+  animation: wiggle 0.3s ease-in-out;
+}
+
+.hover-bounce:hover {
+  animation: bounce-subtle 0.4s ease-in-out;
+}
+
+.hover-glow:hover {
+  animation: pulse-glow 0.6s ease-in-out;
+}
+
+/* Icon hover effect with scale and color */
+.icon-hover {
+  transition: all 0.2s ease;
+}
+
+.icon-hover:hover {
+  transform: scale(1.15);
+  color: hsl(var(--primary));
+}
+
+/* Logo 3D flip animation */
+.logo-3d {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  transition: transform 0.7s ease, box-shadow 0.3s ease;
+}
+
+.logo-3d:hover {
+  transform: rotateX(360deg) scale(1.1);
 }

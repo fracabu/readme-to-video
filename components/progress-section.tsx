@@ -117,7 +117,7 @@ export function ProgressSection({ sessionId, onComplete, onError }: ProgressSect
   const getStepIcon = (status: Step['status']) => {
     switch (status) {
       case 'complete':
-        return <Check className="w-5 h-5 text-green-500" />;
+        return <Check className="w-5 h-5 text-neon-green" />;
       case 'active':
         return <Loader2 className="w-5 h-5 text-primary animate-spin" />;
       case 'error':
@@ -208,7 +208,7 @@ export function ProgressSection({ sessionId, onComplete, onError }: ProgressSect
                           sceneProgress[scene.sceneNumber] === 'generating' &&
                             'border-primary/50 bg-primary/5',
                           sceneProgress[scene.sceneNumber] === 'ready' &&
-                            'border-green-500/50 bg-green-500/5'
+                            'border-[hsl(145,100%,50%,0.5)] bg-[hsl(145,100%,50%,0.05)]'
                         )}
                       >
                         <div className="flex items-center gap-2 mb-2">
@@ -222,7 +222,7 @@ export function ProgressSection({ sessionId, onComplete, onError }: ProgressSect
                             <Loader2 className="w-3 h-3 text-primary animate-spin ml-auto" />
                           )}
                           {sceneProgress[scene.sceneNumber] === 'ready' && (
-                            <Check className="w-3 h-3 text-green-500 ml-auto" />
+                            <Check className="w-3 h-3 text-neon-green ml-auto" />
                           )}
                         </div>
                         <p className="text-sm text-muted-foreground mb-2">

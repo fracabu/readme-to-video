@@ -8,7 +8,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **Pipeline:** `README.md → LLM (script) → Kie.ai Sora 2 (video) → Mux (streaming)`
 
-**Context:** DEV's Worldwide Show and Tell Challenge - Mux (deadline: January 4, 2026)
+**Context:** DEV's Worldwide Show and Tell Challenge - Mux
 
 ## Commands
 
@@ -59,6 +59,12 @@ Each provider implements `LLMProvider` interface with `analyzeReadme()` and `gen
 
 **Default**: OpenRouter with `google/gemini-2.0-flash-exp:free` (free tier)
 
+### Frontend Components
+
+- `components/input-section.tsx` - GitHub URL/README input, API key configuration, style/quality selection
+- `components/progress-section.tsx` - Real-time generation progress display with scene status
+- `components/guide-section.tsx` - Onboarding guide for API key setup
+
 ### Key Types
 
 All TypeScript types are centralized in `types/index.ts`:
@@ -99,6 +105,7 @@ DEFAULT_LLM_PROVIDER=openrouter
 ## Important Implementation Details
 
 - **Multi-Scene Support**: Generates 1 scene (15s), 2 scenes (30s), or 4 scenes (60s). Multiple scenes are concatenated via FFmpeg with crossfade transitions (`lib/ffmpeg.ts`).
+- **Video Styles**: Three aesthetic options (`tech`, `minimal`, `energetic`) that influence prompt generation.
 - **Video Quality Tiers**: Three quality options via Kie.ai Sora 2:
   - `base` ($0.15/scene) - Standard 720p
   - `pro` ($1.35/scene) - Enhanced 720p

@@ -158,18 +158,21 @@ export function AnimatedBackground({ children }: { children: React.ReactNode }) 
 export function FloatingParticles() {
   // Use fixed positions to avoid hydration mismatch
   const particles = [
-    { left: 10, top: 15, delay: 0, duration: 8, size: 3 },
-    { left: 25, top: 45, delay: 1, duration: 12, size: 4 },
-    { left: 40, top: 20, delay: 2, duration: 10, size: 3 },
-    { left: 55, top: 70, delay: 0.5, duration: 9, size: 5 },
-    { left: 70, top: 35, delay: 3, duration: 11, size: 3 },
-    { left: 85, top: 60, delay: 1.5, duration: 8, size: 4 },
-    { left: 15, top: 80, delay: 2.5, duration: 10, size: 3 },
-    { left: 30, top: 55, delay: 4, duration: 12, size: 4 },
-    { left: 60, top: 25, delay: 0.8, duration: 9, size: 3 },
-    { left: 75, top: 85, delay: 3.5, duration: 11, size: 5 },
-    { left: 90, top: 40, delay: 1.2, duration: 8, size: 3 },
-    { left: 5, top: 50, delay: 2.8, duration: 10, size: 4 },
+    { left: 8, top: 12, delay: 0, duration: 8, size: 5 },
+    { left: 22, top: 42, delay: 1, duration: 12, size: 6 },
+    { left: 38, top: 18, delay: 2, duration: 10, size: 5 },
+    { left: 52, top: 68, delay: 0.5, duration: 9, size: 7 },
+    { left: 68, top: 32, delay: 3, duration: 11, size: 5 },
+    { left: 82, top: 58, delay: 1.5, duration: 8, size: 6 },
+    { left: 12, top: 78, delay: 2.5, duration: 10, size: 5 },
+    { left: 28, top: 52, delay: 4, duration: 12, size: 6 },
+    { left: 58, top: 22, delay: 0.8, duration: 9, size: 5 },
+    { left: 72, top: 82, delay: 3.5, duration: 11, size: 7 },
+    { left: 88, top: 38, delay: 1.2, duration: 8, size: 5 },
+    { left: 4, top: 48, delay: 2.8, duration: 10, size: 6 },
+    { left: 45, top: 8, delay: 1.8, duration: 9, size: 5 },
+    { left: 95, top: 72, delay: 0.3, duration: 11, size: 6 },
+    { left: 18, top: 92, delay: 2.2, duration: 10, size: 5 },
   ];
 
   return (
@@ -177,7 +180,7 @@ export function FloatingParticles() {
       {particles.map((p, i) => (
         <div
           key={i}
-          className="absolute bg-primary rounded-full animate-float opacity-50"
+          className="absolute bg-primary rounded-full animate-float opacity-60"
           style={{
             left: `${p.left}%`,
             top: `${p.top}%`,

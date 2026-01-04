@@ -5,11 +5,19 @@ import { InputSection } from '@/components/input-section';
 import { ProgressSection } from '@/components/progress-section';
 import { ResultSection } from '@/components/result-section';
 import { GuideButton } from '@/components/guide-section';
+import { ApiKeysButton } from '@/components/api-keys-button';
 import { FloatingParticles } from '@/components/animated-loader';
 import { Github, AlertCircle, ExternalLink, Video, Sparkles, Bot } from 'lucide-react';
 import type { GenerateRequest } from '@/types';
 
 type AppState = 'input' | 'processing' | 'result' | 'error';
+
+const NEON_COLORS = [
+  'from-primary to-orange-500',           // default
+  'from-[hsl(145,100%,50%)] to-[hsl(180,100%,50%)]',  // green-cyan
+  'from-[hsl(300,100%,60%)] to-[hsl(330,100%,60%)]',  // magenta-pink
+  'from-[hsl(210,100%,60%)] to-[hsl(180,100%,50%)]',  // blue-cyan
+];
 
 export default function Home() {
   const [state, setState] = useState<AppState>('input');
@@ -17,6 +25,14 @@ export default function Home() {
   const [playbackId, setPlaybackId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [logoColorIndex, setLogoColorIndex] = useState(0);
+  const [logoSpin, setLogoSpin] = useState(false);
+
+  const handleLogoClick = () => {
+    setLogoSpin(true);
+    setLogoColorIndex((prev) => (prev + 1) % NEON_COLORS.length);
+    setTimeout(() => setLogoSpin(false), 500);
+  };
 
   const handleGenerate = async (request: GenerateRequest) => {
     setIsLoading(true);
@@ -63,7 +79,7 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen flex flex-col relative overflow-hidden">
+    <main className="min-h-screen flex flex-col relative">
       {/* Animated gradient blobs */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
         <div
@@ -82,24 +98,49 @@ export default function Home() {
       <header className="border-b border-border/50 backdrop-blur-xl bg-background/80 sticky top-0 z-50">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            {/* Logo: circle outside, square cutout inside with R2V */}
-            <div className="w-14 h-14 rounded-full border-2 border-primary/40 flex items-center justify-center">
-              <div className="w-11 h-11 bg-gradient-to-br from-primary to-orange-500 rounded-full flex items-center justify-center">
-                <div className="w-[31px] h-[31px] bg-background flex items-center justify-center">
-                  <span className="text-primary font-bold text-xs font-mono">R2V</span>
+            {/* Logo: click for Easter egg! */}
+            <button
+              onClick={handleLogoClick}
+              className={`logo-3d w-14 h-14 rounded-full border-2 border-primary/40 flex items-center justify-center hover:border-primary ${logoSpin ? 'animate-spin' : ''}`}
+              style={{
+                boxShadow: '0 4px 15px rgba(0,0,0,0.3), 0 8px 25px rgba(255,107,53,0.2), inset 0 -2px 5px rgba(0,0,0,0.2)',
+              }}
+              title="Click me!"
+            >
+              <div
+                className={`w-11 h-11 bg-gradient-to-br ${NEON_COLORS[logoColorIndex]} rounded-full flex items-center justify-center transition-all duration-300`}
+                style={{
+                  boxShadow: 'inset 0 2px 4px rgba(255,255,255,0.3), inset 0 -2px 4px rgba(0,0,0,0.3), 0 2px 8px rgba(0,0,0,0.3)',
+                }}
+              >
+                <div
+                  className="w-[31px] h-[31px] bg-background flex items-center justify-center"
+                  style={{
+                    boxShadow: 'inset 0 2px 6px rgba(0,0,0,0.4), inset 0 -1px 3px rgba(255,255,255,0.1)',
+                  }}
+                >
+                  <span className="text-primary font-aldrich text-[10px] font-bold drop-shadow-[0_0_3px_rgba(255,107,53,0.5)]">R2V</span>
                 </div>
               </div>
-            </div>
-            <span className="font-bold tracking-tight">README2Video</span>
+            </button>
+            <span className="font-aldrich text-lg tracking-wide">
+              <span className="text-foreground uppercase">README</span>
+              <span className="text-primary">2</span>
+              <span className="text-primary lowercase">video</span>
+            </span>
           </div>
-          <a
-            href="https://github.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <Github className="w-5 h-5" />
-          </a>
+          <div className="flex items-center gap-4">
+            <ApiKeysButton />
+            <GuideButton />
+            <a
+              href="https://github.com/fracabu/readme-to-video"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground hover:text-primary transition-colors"
+            >
+              <Github className="w-5 h-5 hover:scale-110 transition-transform" />
+            </a>
+          </div>
         </div>
       </header>
 
@@ -198,9 +239,6 @@ export default function Home() {
           </div>
         </div>
       </footer>
-
-      {/* Help button */}
-      <GuideButton />
     </main>
   );
 }
