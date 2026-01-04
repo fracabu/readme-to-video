@@ -1,0 +1,16 @@
+<svg width="180" height="180" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff6b35"/>
+      <stop offset="100%" stop-color="#f97316"/>
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="180" height="180" fill="#0a0a0a"/>
+  <!-- Outer circle with gradient -->
+  <circle cx="90" cy="90" r="75" fill="url(#logoGradient)"/>
+  <!-- Inner black square -->
+  <rect x="50" y="50" width="80" height="80" fill="#0a0a0a"/>
+  <!-- R2V text -->
+  <text x="90" y="100" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#ff6b35" text-anchor="middle">R2V</text>
+</svg>
