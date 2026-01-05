@@ -123,7 +123,7 @@ export default function Home() {
                 </div>
               </div>
             </button>
-            <span className="font-aldrich text-lg tracking-wide">
+            <span className="font-aldrich text-lg tracking-wide hidden sm:inline">
               <span className="text-foreground uppercase">README</span>
               <span className="text-primary">2</span>
               <span className="text-primary lowercase">video</span>

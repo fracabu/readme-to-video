@@ -160,7 +160,7 @@ export function InputSection({ onGenerate, isLoading }: InputSectionProps) {
           </TabsContent>
         </Tabs>
 
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
           <div className="space-y-1">
             <Label className="text-muted-foreground text-xs">Style</Label>
             <Select value={style} onValueChange={(v) => setStyle(v as typeof style)}>
@@ -224,7 +224,7 @@ export function InputSection({ onGenerate, isLoading }: InputSectionProps) {
           </div>
         )}
 
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           <div className="space-y-1">
             <Label className="text-muted-foreground text-xs">AI Provider</Label>
             <Select value={provider} onValueChange={(v) => {
