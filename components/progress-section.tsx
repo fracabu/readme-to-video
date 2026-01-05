@@ -226,7 +226,7 @@ export function ProgressSection({ sessionId, onComplete, onError }: ProgressSect
                           )}
                         </div>
                         <p className="text-sm text-muted-foreground mb-2">
-                          {scene.descriptionIt}
+                          {scene.description}
                         </p>
                         {scene.narrationText && (
                           <p className="text-xs text-foreground/70 italic border-l-2 border-primary/30 pl-3">

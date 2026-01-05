@@ -1,6 +1,6 @@
 ---
 title: README2Video - Transform Any GitHub README into a Professional Promo Video
-published: false
+published: true
 tags: devchallenge, muxchallenge, showandtell, video
 cover_image: https://image.mux.com/9dgSGD1XGzVm3YOSCslXgrgFbAkiKFCOksgXtUYlvDs/thumbnail.png?width=1200&height=630&fit_mode=smartcrop
 ---
@@ -15,6 +15,10 @@ README.md → AI Analysis → Video Generation → Mux Streaming → Share!
 
 Paste a GitHub URL, choose your style, and get a cinematic promo video in minutes. No editing skills required.
 
+![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/nx590dp1dvpvvilz6yoa.png)
+
+
+
 ## My Pitch Video
 
 {% embed https://stream.mux.com/9dgSGD1XGzVm3YOSCslXgrgFbAkiKFCOksgXtUYlvDs.m3u8 %}
@@ -26,7 +30,17 @@ Paste a GitHub URL, choose your style, and get a cinematic promo video in minute
 - **Live App**: [readme-to-video.onrender.com](https://readme-to-video.onrender.com/)
 - **GitHub Repo**: [github.com/fracabu/readme-to-video](https://github.com/fracabu/readme-to-video)
 
-**Note**: The app uses BYOK (Bring Your Own Keys) - you'll need API keys from Kie.ai, Mux, and an LLM provider (OpenRouter offers free models, or use your own Anthropic/OpenAI/Google key). This keeps the app free and gives users full control over their costs.
+### How to Test (2 minutes setup, all free!)
+
+The app uses BYOK (Bring Your Own Keys) - this keeps costs transparent and gives you full control.
+
+| Service | How to Get Key | Cost |
+|---------|----------------|------|
+| **Mux** | [mux.com](https://www.mux.com/) - Create free account | Free (no credit card) |
+| **OpenRouter** | [openrouter.ai](https://openrouter.ai/) - Sign up, get API key | Free models available! |
+| **Kie.ai** | [kie.ai](https://kie.ai/) - Sign up, get API key | Free credits on signup |
+
+**Free models tip**: In OpenRouter, select models ending with `:free` like `deepseek/deepseek-r1:free` or `google/gemini-2.0-flash-exp:free`.
 
 ## The Story Behind It
 
@@ -41,6 +55,17 @@ The solution? Let AI do the heavy lifting:
 4. **Host** on Mux for instant streaming
 
 Now any developer can go from README to promo video in under 5 minutes.
+
+## The Opportunity
+
+There are **300+ million repositories** on GitHub. Every single one could benefit from a promo video.
+
+- Indie developers launching products
+- Open source projects seeking contributors
+- Startups pitching to investors
+- Students showcasing portfolios
+
+README2Video turns a $500+ video production into a **$2 automated process**. That's the kind of democratization that scales.
 
 ## Technical Highlights
 
@@ -60,7 +85,7 @@ Now any developer can go from README to promo video in under 5 minutes.
 - **Video Styles**: Tech, Minimal, or Energetic aesthetics
 - **Durations**: 15s, 30s, or 60s videos
 - **Real-time Progress**: SSE updates showing each generation step
-- **BYOK Model**: Users bring their own API keys - no hidden costs
+- **BYOK Model**: Users bring their own API keys - no hidden costs, full transparency
 
 ### Use of Mux (Additional Prize Category Participants Only)
 
@@ -117,6 +142,6 @@ Building README2Video with Mux took minutes instead of days. That's exactly the 
 
 ---
 
-**Built with Claude Opus 4.5** | Powered by **Mux**, **OpenRouter**, **Kie AI** & **Sora 2**
+**Built with ❤️ and AI** | Powered by **Mux**, **OpenRouter**, **Kie.ai** & **Sora 2**
 
 *By submitting this project, I confirm that my video adheres to Mux's terms of service: https://www.mux.com/terms*

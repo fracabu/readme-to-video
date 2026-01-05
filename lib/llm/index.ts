@@ -80,7 +80,7 @@ export function getScriptGenerationPrompt(options: ScriptOptions): string {
   const sceneStructure = Array.from({ length: numScenes }, (_, i) => `    {
       "sceneNumber": ${i + 1},
       "duration": ${sceneDuration},
-      "descriptionIt": "Descrizione in italiano di cosa accade nella scena ${i + 1}",
+      "description": "Description in English of what happens in scene ${i + 1}",
       "narrationText": "What the narrator says in scene ${i + 1} (2-3 sentences)",
       "prompt": "Detailed prompt for scene ${i + 1} with narration and audio"
     }`).join(',\n');

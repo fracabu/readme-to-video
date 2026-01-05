@@ -22,7 +22,7 @@ export interface ReadmeAnalysis {
 export interface Scene {
   sceneNumber: number;
   duration: number;
-  descriptionIt: string;
+  description: string; // Scene description in English
   narrationText?: string; // What the narrator says (for audio generation)
   prompt: string; // English prompt for Sora 2 (includes narration instructions)
 }
