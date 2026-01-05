@@ -3,7 +3,8 @@
 import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Link, Code, Check, Plus, Info } from 'lucide-react';
+import { Link, Code, Check, Plus, Info, Image, Film, Download } from 'lucide-react';
+import { Slider } from '@/components/ui/slider';
 import MuxPlayer from '@mux/mux-player-react';
 
 interface ResultSectionProps {
@@ -13,9 +14,16 @@ interface ResultSectionProps {
 
 export function ResultSection({ playbackId, onReset }: ResultSectionProps) {
   const [copied, setCopied] = useState<string | null>(null);
+  const [thumbnailTime, setThumbnailTime] = useState(5);
+  const [showGif, setShowGif] = useState(false);
 
   const shareUrl = `https://player.mux.com/${playbackId}`;
   const embedCode = `<iframe src="https://player.mux.com/${playbackId}" width="640" height="360" frameborder="0" allowfullscreen></iframe>`;
+
+  // Mux Image & Video URLs
+  const thumbnailUrl = `https://image.mux.com/${playbackId}/thumbnail.png?time=${thumbnailTime}`;
+  const gifUrl = `https://image.mux.com/${playbackId}/animated.gif?start=0&end=8&width=480`;
+  const mp4Url = `https://stream.mux.com/${playbackId}/medium.mp4`;
 
   const copyToClipboard = async (text: string, type: string) => {
     await navigator.clipboard.writeText(text);
@@ -51,46 +59,129 @@ export function ResultSection({ playbackId, onReset }: ResultSectionProps) {
         </div>
 
         {/* Actions Panel */}
-        <div className="lg:w-72 flex flex-col gap-4">
-          <Button
-            variant="outline"
-            className="h-auto py-4 flex-col gap-2"
-            onClick={() => copyToClipboard(shareUrl, 'share')}
-          >
-            {copied === 'share' ? (
-              <Check className="w-5 h-5 text-green-500" />
-            ) : (
-              <Link className="w-5 h-5" />
-            )}
-            <span>{copied === 'share' ? 'Copied!' : 'Copy Share Link'}</span>
-          </Button>
+        <div className="lg:w-80 flex flex-col gap-4">
+          {/* Dynamic Thumbnail */}
+          <Card className="glass-card">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm flex items-center gap-2">
+                <Image className="w-4 h-4" />
+                Thumbnail Preview
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <div className="aspect-video bg-black rounded-md overflow-hidden">
+                <img
+                  src={thumbnailUrl}
+                  alt="Video thumbnail"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="space-y-2">
+                <div className="flex justify-between text-xs text-muted-foreground">
+                  <span>Time: {thumbnailTime}s</span>
+                  <span>0-15s</span>
+                </div>
+                <Slider
+                  value={[thumbnailTime]}
+                  onValueChange={(v) => setThumbnailTime(v[0])}
+                  min={0}
+                  max={15}
+                  step={1}
+                  className="w-full"
+                />
+              </div>
+              <Button
+                variant="outline"
+                size="sm"
+                className="w-full"
+                onClick={() => copyToClipboard(thumbnailUrl, 'thumbnail')}
+              >
+                {copied === 'thumbnail' ? <Check className="w-4 h-4 mr-2 text-green-500" /> : <Link className="w-4 h-4 mr-2" />}
+                {copied === 'thumbnail' ? 'Copied!' : 'Copy Thumbnail URL'}
+              </Button>
+            </CardContent>
+          </Card>
 
-          <Button
-            variant="outline"
-            className="h-auto py-4 flex-col gap-2"
-            onClick={() => copyToClipboard(embedCode, 'embed')}
-          >
-            {copied === 'embed' ? (
-              <Check className="w-5 h-5 text-green-500" />
-            ) : (
-              <Code className="w-5 h-5" />
-            )}
-            <span>{copied === 'embed' ? 'Copied!' : 'Copy Embed Code'}</span>
-          </Button>
+          {/* Animated GIF Preview */}
+          <Card className="glass-card">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm flex items-center gap-2">
+                <Film className="w-4 h-4" />
+                Animated GIF Preview
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <div
+                className="aspect-video bg-black rounded-md overflow-hidden cursor-pointer"
+                onClick={() => setShowGif(!showGif)}
+              >
+                {showGif ? (
+                  <img src={gifUrl} alt="Animated preview" className="w-full h-full object-cover" />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center text-muted-foreground text-sm">
+                    Click to load GIF
+                  </div>
+                )}
+              </div>
+              <Button
+                variant="outline"
+                size="sm"
+                className="w-full"
+                onClick={() => copyToClipboard(gifUrl, 'gif')}
+              >
+                {copied === 'gif' ? <Check className="w-4 h-4 mr-2 text-green-500" /> : <Link className="w-4 h-4 mr-2" />}
+                {copied === 'gif' ? 'Copied!' : 'Copy GIF URL'}
+              </Button>
+            </CardContent>
+          </Card>
 
-          <div className="flex items-start gap-3 p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
-            <Info className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
-            <p className="text-sm text-blue-200">
-              This video is now available in your Mux account under Assets.
-            </p>
+          {/* Download & Share Buttons */}
+          <div className="grid grid-cols-2 gap-2">
+            <Button
+              variant="outline"
+              className="h-auto py-3 flex-col gap-1"
+              onClick={() => copyToClipboard(shareUrl, 'share')}
+            >
+              {copied === 'share' ? (
+                <Check className="w-4 h-4 text-green-500" />
+              ) : (
+                <Link className="w-4 h-4" />
+              )}
+              <span className="text-xs">{copied === 'share' ? 'Copied!' : 'Share Link'}</span>
+            </Button>
+
+            <Button
+              variant="outline"
+              className="h-auto py-3 flex-col gap-1"
+              onClick={() => copyToClipboard(embedCode, 'embed')}
+            >
+              {copied === 'embed' ? (
+                <Check className="w-4 h-4 text-green-500" />
+              ) : (
+                <Code className="w-4 h-4" />
+              )}
+              <span className="text-xs">{copied === 'embed' ? 'Copied!' : 'Embed Code'}</span>
+            </Button>
           </div>
 
+          {/* Download MP4 Button */}
           <Button
             variant="default"
-            className="h-auto py-4 mt-auto"
+            className="h-auto py-3 bg-primary hover:bg-primary/90"
+            asChild
+          >
+            <a href={mp4Url} download target="_blank" rel="noopener noreferrer">
+              <Download className="w-4 h-4 mr-2" />
+              Download MP4
+            </a>
+          </Button>
+
+          <Button
+            variant="outline"
+            className="h-auto py-3"
             onClick={onReset}
           >
-            <Plus className="w-5 h-5 mr-2" />
+            <Plus className="w-4 h-4 mr-2" />
             Create New Video
           </Button>
         </div>

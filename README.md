@@ -52,6 +52,9 @@ README.md → LLM Analysis → AI Video Generation → Mux Streaming → Share!
 | **Multi-Scene Support** | Generate 15s (1 scene), 30s (2 scenes), or 60s (4 scenes) videos |
 | **Video Quality Options** | Standard (720p), Pro (720p enhanced), or Pro HD (1080p) via Sora 2 |
 | **Smooth Transitions** | Professional crossfade transitions between scenes using FFmpeg |
+| **Dynamic Thumbnails** | Interactive slider to select the perfect thumbnail frame (0-15s) |
+| **GIF Preview** | Animated GIF preview of your video for social sharing |
+| **MP4 Download** | One-click download of your video in MP4 format |
 | **Easy Sharing** | One-click copy for Mux player share link or embed code |
 
 ### How It Works
@@ -225,6 +228,9 @@ README.md → Analisi LLM → Generazione Video AI → Streaming Mux → Condivi
 | **Supporto Multi-Scena** | Genera video da 15s (1 scena), 30s (2 scene) o 60s (4 scene) |
 | **Opzioni Qualità Video** | Standard (720p), Pro (720p migliorato), o Pro HD (1080p) via Sora 2 |
 | **Transizioni Fluide** | Crossfade professionali tra le scene con FFmpeg |
+| **Thumbnail Dinamiche** | Slider interattivo per selezionare il frame perfetto (0-15s) |
+| **Anteprima GIF** | Anteprima animata del video per condivisione social |
+| **Download MP4** | Download del video in formato MP4 con un click |
 | **Condivisione Facile** | Un click per copiare link Mux player o codice embed |
 
 ### Come Funziona
