@@ -2,7 +2,7 @@
 title: README2Video - Transform Any GitHub README into a Professional Promo Video
 published: true
 tags: devchallenge, muxchallenge, showandtell, video
-cover_image: https://image.mux.com/9dgSGD1XGzVm3YOSCslXgrgFbAkiKFCOksgXtUYlvDs/thumbnail.png?width=1200&height=630&fit_mode=smartcrop
+cover_image: https://dev-to-uploads.s3.amazonaws.com/uploads/articles/nx590dp1dvpvvilz6yoa.png
 ---
 
 *This is a submission for the [DEV's Worldwide Show and Tell Challenge Presented by Mux](https://dev.to/challenges/mux-2025-12-03)*
@@ -17,6 +17,15 @@ Paste a GitHub URL, choose your style, and get a cinematic promo video in minute
 
 ![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/nx590dp1dvpvvilz6yoa.png)
 
+
+![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/p5pkypdmkpfw89fv3mzd.png)
+
+
+![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/kk0t4ibgjd3mg3jysnw3.png)
+
+
+
+![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/tjr6fij1xtfjawdgynhf.png)
 
 
 ## My Pitch Video
@@ -41,6 +50,11 @@ The app uses BYOK (Bring Your Own Keys) - this keeps costs transparent and gives
 | **Kie.ai** | [kie.ai](https://kie.ai/) - Sign up, get API key | Free credits on signup |
 
 **Free models tip**: In OpenRouter, select models ending with `:free` like `deepseek/deepseek-r1:free` or `google/gemini-2.0-flash-exp:free`.
+
+
+![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/6gt8w5mi42qvhb61t53w.png)
+
+
 
 ## The Story Behind It
 

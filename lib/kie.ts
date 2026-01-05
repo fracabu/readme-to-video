@@ -142,6 +142,16 @@ export async function getTaskStatus(taskId: string, apiKey: string): Promise<{
       }
     }
 
+    // More aggressive fallback: search for any URL in the response
+    if (!videoUrl) {
+      const dataStr = JSON.stringify(data);
+      const urlMatch = dataStr.match(/https?:\/\/[^"'\s]+\.(mp4|m3u8|webm)/i);
+      if (urlMatch) {
+        videoUrl = urlMatch[0];
+        console.log(`[Kie.ai] Found videoUrl via regex search: ${videoUrl}`);
+      }
+    }
+
     // If success but no video URL, log warning
     if (!videoUrl) {
       console.warn(`[Kie.ai] Task ${taskId} is ${state} but no videoUrl found! Full data:`, JSON.stringify(data, null, 2));
@@ -172,10 +182,14 @@ export async function waitForTaskCompletion(
 
   for (let attempt = 0; attempt < maxAttempts; attempt++) {
     const status = await getTaskStatus(taskId, apiKey);
-    console.log(`Task ${taskId} status: ${status.state} (attempt ${attempt + 1}/${maxAttempts})`);
+    console.log(`Task ${taskId} status: ${status.state}, videoUrl: ${status.videoUrl ? 'found' : 'not found'} (attempt ${attempt + 1}/${maxAttempts})`);
 
-    if (status.state === 'success' && status.videoUrl) {
-      return status.videoUrl;
+    if (status.state === 'success') {
+      if (status.videoUrl) {
+        return status.videoUrl;
+      }
+      // Success but no URL - wait a bit and try again (URL might not be ready yet)
+      console.warn(`[Kie.ai] Task ${taskId} is success but no videoUrl yet, retrying...`);
     }
 
     if (status.state === 'fail' || status.state === 'failed') {
