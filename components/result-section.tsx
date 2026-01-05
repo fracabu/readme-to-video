@@ -32,34 +32,32 @@ export function ResultSection({ playbackId, onReset }: ResultSectionProps) {
   };
 
   return (
-    <div className="w-full px-4 h-[calc(100vh-10rem)] flex flex-col">
-      <div className="flex flex-col lg:flex-row gap-4 flex-1 min-h-0">
+    <div className="w-full h-[calc(100vh-8rem)] flex flex-col">
+      <div className="flex flex-row gap-3 flex-1 min-h-0 px-2">
         {/* Video Player */}
         <div className="flex-1 min-w-0 flex flex-col">
           <Card className="glass-card overflow-hidden flex-1 flex flex-col">
-            <CardHeader className="py-2 px-4">
-              <CardTitle className="text-base flex items-center gap-2">
+            <CardHeader className="py-2 px-3">
+              <CardTitle className="text-sm flex items-center gap-2">
                 <span className="text-green-500">Video Ready</span>
               </CardTitle>
             </CardHeader>
-            <CardContent className="p-0 flex-1">
-              <div className="aspect-video bg-black">
-                <MuxPlayer
-                  playbackId={playbackId}
-                  accentColor="#f97316"
-                  metadata={{
-                    video_title: 'README Promo Video',
-                    viewer_user_id: 'anonymous',
-                  }}
-                  style={{ width: '100%', height: '100%' }}
-                />
-              </div>
+            <CardContent className="p-0 flex-1 flex items-center justify-center bg-black">
+              <MuxPlayer
+                playbackId={playbackId}
+                accentColor="#f97316"
+                metadata={{
+                  video_title: 'README Promo Video',
+                  viewer_user_id: 'anonymous',
+                }}
+                style={{ width: '100%', height: '100%', maxHeight: 'calc(100vh - 14rem)' }}
+              />
             </CardContent>
           </Card>
         </div>
 
         {/* Actions Panel */}
-        <div className="lg:w-80 flex flex-col gap-3">
+        <div className="w-64 flex flex-col gap-2 flex-shrink-0">
           {/* Dynamic Thumbnail */}
           <Card className="glass-card">
             <CardHeader className="py-2 px-3">
