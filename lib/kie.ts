@@ -106,31 +106,52 @@ export async function getTaskStatus(taskId: string, apiKey: string): Promise<{
 
   const data = result.data || result;
 
-  // Parse state (from working Python code)
-  const state = (data.state || data.status || '').toLowerCase();
+  // Parse state - check multiple possible fields
+  const rawState = data.state || data.status || '';
+  const state = rawState.toLowerCase();
 
-  console.log(`[Kie.ai] Task ${taskId} - state: "${state}", has resultJson: ${!!data.resultJson}`);
+  console.log(`[Kie.ai] Task ${taskId} - rawState: "${rawState}", state: "${state}", has resultJson: ${!!data.resultJson}`);
 
   // Parse video URL from resultJson if success
   let videoUrl: string | undefined;
-  if (state === 'success' && data.resultJson) {
-    try {
-      const resultData = typeof data.resultJson === 'string'
-        ? JSON.parse(data.resultJson)
-        : data.resultJson;
-      console.log(`[Kie.ai] Parsed resultJson:`, JSON.stringify(resultData, null, 2));
-      const urls = resultData.resultUrls || resultData.result_urls || [];
-      videoUrl = urls[0];
-      console.log(`[Kie.ai] Extracted videoUrl: ${videoUrl}`);
-    } catch (e) {
-      console.error('[Kie.ai] Error parsing resultJson:', e, 'Raw:', data.resultJson);
+
+  // Check for success state (handle variations)
+  const isSuccess = state === 'success' || state === 'succeed' || state === 'completed' || state === 'complete';
+
+  if (isSuccess) {
+    // Try multiple ways to get video URL
+    if (data.resultJson) {
+      try {
+        const resultData = typeof data.resultJson === 'string'
+          ? JSON.parse(data.resultJson)
+          : data.resultJson;
+        console.log(`[Kie.ai] Parsed resultJson:`, JSON.stringify(resultData, null, 2));
+        const urls = resultData.resultUrls || resultData.result_urls || resultData.video_urls || [];
+        videoUrl = urls[0] || resultData.videoUrl || resultData.video_url;
+        console.log(`[Kie.ai] Extracted videoUrl from resultJson: ${videoUrl}`);
+      } catch (e) {
+        console.error('[Kie.ai] Error parsing resultJson:', e, 'Raw:', data.resultJson);
+      }
+    }
+
+    // Fallback: check other possible fields for video URL
+    if (!videoUrl) {
+      videoUrl = data.videoUrl || data.video_url || data.output?.videoUrl || data.output?.video_url;
+      if (videoUrl) {
+        console.log(`[Kie.ai] Found videoUrl in fallback field: ${videoUrl}`);
+      }
+    }
+
+    // If success but no video URL, log warning
+    if (!videoUrl) {
+      console.warn(`[Kie.ai] Task ${taskId} is ${state} but no videoUrl found! Full data:`, JSON.stringify(data, null, 2));
     }
   }
 
   return {
-    state,
+    state: isSuccess ? 'success' : state, // Normalize success states
     videoUrl,
-    error: data.failMsg || data.error,
+    error: data.failMsg || data.error || data.fail_msg,
   };
 }
 
