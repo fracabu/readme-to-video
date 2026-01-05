@@ -7,7 +7,7 @@ import { ResultSection } from '@/components/result-section';
 import { GuideButton } from '@/components/guide-section';
 import { ApiKeysButton } from '@/components/api-keys-button';
 import { FloatingParticles } from '@/components/animated-loader';
-import { Github, AlertCircle, ExternalLink, Video, Sparkles, Bot } from 'lucide-react';
+import { Github, AlertCircle, ExternalLink, Video, Sparkles, Bot, Heart } from 'lucide-react';
 import type { GenerateRequest } from '@/types';
 
 type AppState = 'input' | 'processing' | 'result' | 'error';
@@ -183,60 +183,29 @@ export default function Home() {
       </div>
 
       {/* Footer */}
-      <footer className="border-t border-border/50 py-3 relative z-10 bg-background/80 backdrop-blur-sm">
-        <div className="container mx-auto px-4 text-center text-xs text-muted-foreground space-y-2">
-          <p className="flex items-center justify-center gap-1">
-            Developed with love by{' '}
-            <a
-              href="https://github.com/fracabu"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 text-foreground font-medium hover:text-primary transition-colors"
-            >
-              <Github className="w-3.5 h-3.5" />
-              fracabu
-            </a>
-            {' '}&amp;{' '}
-            <a
-              href="https://claude.ai"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 text-foreground font-medium hover:text-primary transition-colors"
-            >
-              <Bot className="w-3.5 h-3.5" />
-              Claude Opus 4.5
-            </a>
-          </p>
-          <div className="flex items-center justify-center gap-3 flex-wrap">
-            <span>Powered by</span>
-            <a
-              href="https://mux.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 text-foreground font-medium hover:text-primary transition-colors"
-            >
-              <Video className="w-3.5 h-3.5" />
-              Mux
-            </a>
-            <a
-              href="https://kie.ai"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 text-foreground font-medium hover:text-primary transition-colors"
-            >
-              <Sparkles className="w-3.5 h-3.5" />
-              Kie AI Sora 2
-            </a>
-            <a
-              href="https://openrouter.ai"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 text-foreground font-medium hover:text-primary transition-colors"
-            >
-              <Bot className="w-3.5 h-3.5" />
-              OpenRouter
-            </a>
-          </div>
+      <footer className="fixed bottom-0 left-0 right-0 border-t border-border/50 py-2 z-10 bg-background/90 backdrop-blur-sm">
+        <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground font-aldrich flex-wrap px-4">
+          <span className="flex items-center gap-1">
+            Developed with <Heart className="w-3 h-3 text-red-500 fill-red-500" /> by
+          </span>
+          <a href="https://github.com/fracabu" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-foreground hover:text-primary transition-colors">
+            <Github className="w-3 h-3" /> fracabu
+          </a>
+          <span>&</span>
+          <a href="https://claude.ai" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-foreground hover:text-primary transition-colors">
+            <Bot className="w-3 h-3" /> Claude
+          </a>
+          <span className="text-border">|</span>
+          <span>Powered by</span>
+          <a href="https://mux.com" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-foreground hover:text-primary transition-colors">
+            <Video className="w-3 h-3" /> Mux
+          </a>
+          <a href="https://kie.ai" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-foreground hover:text-primary transition-colors">
+            <Sparkles className="w-3 h-3" /> Kie AI
+          </a>
+          <a href="https://openrouter.ai" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-foreground hover:text-primary transition-colors">
+            <Bot className="w-3 h-3" /> OpenRouter
+          </a>
         </div>
       </footer>
     </main>
