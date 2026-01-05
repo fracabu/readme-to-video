@@ -110,12 +110,15 @@ README2Video turns a $500+ video production into a **$2 automated process**. Tha
 - **Durations**: 15s, 30s, or 60s videos
 - **Real-time Progress**: SSE updates showing each generation step
 - **BYOK Model**: Users bring their own API keys - no hidden costs, full transparency
+- **Dynamic Thumbnail Slider**: Interactive time picker (0-15s) to select the perfect thumbnail
+- **Animated GIF Preview**: One-click GIF generation for social sharing
+- **MP4 Download**: Direct download button for offline use
 
 ---
 
 ## Use of Mux (Additional Prize Category)
 
-README2Video leverages **6 distinct Mux features** to deliver a seamless video experience:
+README2Video leverages **6 distinct Mux features** - all exposed in the UI for users to interact with:
 
 ### 1. Programmatic Upload API
 
@@ -147,9 +150,9 @@ Mux automatically transcodes every video into multiple resolutions and bitrates.
 const streamUrl = `https://stream.mux.com/${playbackId}.m3u8`;
 ```
 
-### 3. Playback URL Generation
+### 3. Playback URL Generation + MP4 Download
 
-Each video gets a unique, shareable streaming URL:
+Each video gets a unique, shareable streaming URL - plus a direct download option:
 
 ```javascript
 // Get the playback ID from the asset
@@ -162,9 +165,11 @@ const streamUrl = `https://stream.mux.com/${playbackId}.m3u8`;
 const mp4Url = `https://stream.mux.com/${playbackId}/medium.mp4`;
 ```
 
-### 4. Dynamic Thumbnails
+**In the app**: A prominent "Download MP4" button lets users save their video locally for offline use or uploading to other platforms.
 
-Mux generates thumbnails at any timestamp - perfect for social sharing:
+### 4. Dynamic Thumbnails with Interactive Slider
+
+Mux generates thumbnails at any timestamp. We built an **interactive slider** so users can scrub through their video and pick the perfect frame:
 
 ```javascript
 // Thumbnail at specific time (in seconds)
@@ -173,6 +178,8 @@ const thumbnail = `https://image.mux.com/${playbackId}/thumbnail.png?time=5`;
 // Custom dimensions
 const customThumb = `https://image.mux.com/${playbackId}/thumbnail.png?time=10&width=1280&height=720`;
 ```
+
+**In the app**: Users drag a slider (0-15s) and see the thumbnail update in real-time. One click copies the URL for social sharing.
 
 **Example** - Dynamic thumbnail from our pitch video:
 
@@ -189,6 +196,8 @@ const gifPreview = `https://image.mux.com/${playbackId}/animated.gif?start=0&end
 // Customize FPS for smaller file size
 const optimizedGif = `https://image.mux.com/${playbackId}/animated.gif?start=2&end=8&fps=15&width=320`;
 ```
+
+**In the app**: GIF previews are lazy-loaded (click to view) to save bandwidth. Users can copy the GIF URL instantly for sharing on Twitter, Discord, or README files.
 
 **Example** - Animated preview of our pitch video:
 
@@ -246,6 +255,9 @@ Serverless platforms timeout during long generations. Solution: Deployed on Rend
 
 ## What's Next
 
+- [x] ~~Dynamic Thumbnail Slider~~ - **Done!** Interactive time picker in result view
+- [x] ~~Animated GIF Preview~~ - **Done!** Lazy-loaded GIF for social sharing
+- [x] ~~MP4 Download~~ - **Done!** One-click download button
 - [ ] Mux Player React component for enhanced playback controls
 - [ ] Auto-generated captions using Mux's transcription API
 - [ ] Storyboard preview before final generation
