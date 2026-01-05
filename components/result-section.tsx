@@ -32,11 +32,11 @@ export function ResultSection({ playbackId, onReset }: ResultSectionProps) {
   };
 
   return (
-    <div className="fixed inset-0 top-14 bottom-10 flex justify-center gap-4 p-4 overflow-hidden">
-      {/* Video Player - Reduced size */}
-      <div className="w-[55%] max-w-3xl">
+    <div className="fixed inset-0 top-14 bottom-10 flex justify-center gap-3 p-3 overflow-hidden">
+      {/* Video Player */}
+      <div className="flex-1 max-w-3xl">
         <Card className="glass-card h-full overflow-hidden flex flex-col">
-          <CardHeader className="py-2 px-4 flex-shrink-0">
+          <CardHeader className="py-1 px-3 flex-shrink-0">
             <CardTitle className="text-sm text-green-500">Video Ready</CardTitle>
           </CardHeader>
           <CardContent className="p-2 flex-1 flex items-center justify-center">
@@ -52,70 +52,72 @@ export function ResultSection({ playbackId, onReset }: ResultSectionProps) {
         </Card>
       </div>
 
-      {/* Right Panel - Wider */}
-      <div className="w-96 flex flex-col gap-3 flex-shrink-0">
+      {/* Right Panel - Previews */}
+      <div className="w-72 flex flex-col gap-2 flex-shrink-0">
         {/* Thumbnail Preview */}
-        <Card className="glass-card">
-          <CardHeader className="py-2 px-3">
-            <CardTitle className="text-xs flex items-center gap-2">
-              <Image className="w-4 h-4" /> Thumbnail Preview
+        <Card className="glass-card flex-1">
+          <CardHeader className="py-1 px-2">
+            <CardTitle className="text-[11px] flex items-center gap-1">
+              <Image className="w-3 h-3" /> Thumbnail
             </CardTitle>
           </CardHeader>
-          <CardContent className="p-3 pt-0 space-y-2">
-            <div className="aspect-video bg-black rounded overflow-hidden">
+          <CardContent className="p-2 pt-0 space-y-1">
+            <div className="h-28 bg-black rounded overflow-hidden">
               <img src={thumbnailUrl} alt="Thumbnail" className="w-full h-full object-cover" />
             </div>
-            <div className="flex items-center gap-2">
-              <span className="text-xs text-muted-foreground w-6">{thumbnailTime}s</span>
+            <div className="flex items-center gap-1">
+              <span className="text-[10px] text-muted-foreground">{thumbnailTime}s</span>
               <Slider value={[thumbnailTime]} onValueChange={(v) => setThumbnailTime(v[0])} min={0} max={15} step={1} className="flex-1" />
-              <Button variant="ghost" size="sm" className="h-7 px-2" onClick={() => copyToClipboard(thumbnailUrl, 'thumbnail')}>
-                {copied === 'thumbnail' ? <Check className="w-4 h-4 text-green-500" /> : <Link className="w-4 h-4" />}
+              <Button variant="ghost" size="sm" className="h-6 w-6 p-0" onClick={() => copyToClipboard(thumbnailUrl, 'thumbnail')}>
+                {copied === 'thumbnail' ? <Check className="w-3 h-3 text-green-500" /> : <Link className="w-3 h-3" />}
               </Button>
             </div>
           </CardContent>
         </Card>
 
         {/* GIF Preview */}
-        <Card className="glass-card">
-          <CardHeader className="py-2 px-3">
-            <CardTitle className="text-xs flex items-center gap-2">
-              <Film className="w-4 h-4" /> GIF Preview
+        <Card className="glass-card flex-1">
+          <CardHeader className="py-1 px-2">
+            <CardTitle className="text-[11px] flex items-center gap-1">
+              <Film className="w-3 h-3" /> GIF Preview
             </CardTitle>
           </CardHeader>
-          <CardContent className="p-3 pt-0 space-y-2">
-            <div className="aspect-video bg-black rounded overflow-hidden cursor-pointer" onClick={() => setShowGif(!showGif)}>
+          <CardContent className="p-2 pt-0 space-y-1">
+            <div className="h-28 bg-black rounded overflow-hidden cursor-pointer" onClick={() => setShowGif(!showGif)}>
               {showGif ? (
                 <img src={gifUrl} alt="GIF" className="w-full h-full object-cover" />
               ) : (
-                <div className="w-full h-full flex items-center justify-center text-muted-foreground text-sm">Click to load</div>
+                <div className="w-full h-full flex items-center justify-center text-muted-foreground text-xs">Click to load</div>
               )}
             </div>
-            <Button variant="ghost" size="sm" className="w-full h-7" onClick={() => copyToClipboard(gifUrl, 'gif')}>
-              {copied === 'gif' ? <Check className="w-4 h-4 mr-2 text-green-500" /> : <Link className="w-4 h-4 mr-2" />}
-              <span className="text-xs">{copied === 'gif' ? 'Copied!' : 'Copy URL'}</span>
+            <Button variant="ghost" size="sm" className="w-full h-6 text-[10px]" onClick={() => copyToClipboard(gifUrl, 'gif')}>
+              {copied === 'gif' ? <Check className="w-3 h-3 mr-1 text-green-500" /> : <Link className="w-3 h-3 mr-1" />}
+              Copy URL
             </Button>
           </CardContent>
         </Card>
+      </div>
 
-        {/* Action Buttons */}
-        <div className="grid grid-cols-2 gap-2">
-          <Button variant="outline" className="h-10" onClick={() => copyToClipboard(shareUrl, 'share')}>
-            {copied === 'share' ? <Check className="w-4 h-4 mr-2 text-green-500" /> : <Link className="w-4 h-4 mr-2" />}
-            Share
-          </Button>
-          <Button variant="outline" className="h-10" onClick={() => copyToClipboard(embedCode, 'embed')}>
-            {copied === 'embed' ? <Check className="w-4 h-4 mr-2 text-green-500" /> : <Code className="w-4 h-4 mr-2" />}
-            Embed
-          </Button>
-          <Button variant="default" className="h-10 bg-primary" asChild>
-            <a href={mp4Url} download target="_blank" rel="noopener noreferrer">
-              <Download className="w-4 h-4 mr-2" /> MP4
-            </a>
-          </Button>
-          <Button variant="outline" className="h-10" onClick={onReset}>
-            <Plus className="w-4 h-4 mr-2" /> New
-          </Button>
-        </div>
+      {/* Action Buttons - Vertical */}
+      <div className="flex flex-col gap-2 flex-shrink-0">
+        <Button variant="outline" className="h-12 w-12 flex-col gap-1 p-1" onClick={() => copyToClipboard(shareUrl, 'share')}>
+          {copied === 'share' ? <Check className="w-4 h-4 text-green-500" /> : <Link className="w-4 h-4" />}
+          <span className="text-[9px]">Share</span>
+        </Button>
+        <Button variant="outline" className="h-12 w-12 flex-col gap-1 p-1" onClick={() => copyToClipboard(embedCode, 'embed')}>
+          {copied === 'embed' ? <Check className="w-4 h-4 text-green-500" /> : <Code className="w-4 h-4" />}
+          <span className="text-[9px]">Embed</span>
+        </Button>
+        <Button variant="default" className="h-12 w-12 flex-col gap-1 p-1 bg-primary" asChild>
+          <a href={mp4Url} download target="_blank" rel="noopener noreferrer">
+            <Download className="w-4 h-4" />
+            <span className="text-[9px]">MP4</span>
+          </a>
+        </Button>
+        <Button variant="outline" className="h-12 w-12 flex-col gap-1 p-1" onClick={onReset}>
+          <Plus className="w-4 h-4" />
+          <span className="text-[9px]">New</span>
+        </Button>
       </div>
     </div>
   );
