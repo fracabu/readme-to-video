@@ -32,9 +32,9 @@ export function ResultSection({ playbackId, onReset }: ResultSectionProps) {
   };
 
   return (
-    <div className="fixed inset-0 top-14 bottom-10 flex gap-4 p-4 overflow-hidden">
+    <div className="fixed inset-0 top-14 bottom-10 flex justify-center gap-4 p-4 overflow-hidden">
       {/* Video Player - Reduced size */}
-      <div className="flex-1 max-w-4xl">
+      <div className="w-[55%] max-w-3xl">
         <Card className="glass-card h-full overflow-hidden flex flex-col">
           <CardHeader className="py-2 px-4 flex-shrink-0">
             <CardTitle className="text-sm text-green-500">Video Ready</CardTitle>
@@ -53,7 +53,7 @@ export function ResultSection({ playbackId, onReset }: ResultSectionProps) {
       </div>
 
       {/* Right Panel - Wider */}
-      <div className="w-80 flex flex-col gap-3 flex-shrink-0">
+      <div className="w-96 flex flex-col gap-3 flex-shrink-0">
         {/* Thumbnail Preview */}
         <Card className="glass-card">
           <CardHeader className="py-2 px-3">
